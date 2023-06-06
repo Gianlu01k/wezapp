@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 
 const app = express()
 mongoose.connect("mongodb+srv://wezapp:progetto@wezappchat.p1ixspt.mongodb.net/chatdata")
@@ -10,6 +11,8 @@ db.once("open", () => {
 })
 
 const router = require('./routes/chats')
+
+app.use(cors())
 
 app.use(express.json())
 

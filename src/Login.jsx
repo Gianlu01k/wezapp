@@ -1,31 +1,38 @@
 import React, {useEffect} from "react";
 import {useState} from "react";
-import {useParams} from "react-router-dom";
+import {Link, redirect} from "react-router-dom";
 
-export default function Login(loggedUser){
+export default function Login(prop){
+    const [testo, setTesto] = useState("")
     const [username, setUsername] = useState("");
-    /*function handleChange(e){
-        setUsername(e.target.value)
-    }*/
+    const [error, setError] = useState(false)
+
+    function handleChange(e){
+        setTesto(e.target.value)
+    }
     function handleSubmit(e){
-         fetch('/', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                username: username
-            })}).then(res => {
-            if (res.ok) return res.json();
-            else throw new Error('Si è verificato un errore nella comunicazione con il server');
-        }).then(obj => {
-            console.log(obj)
-        })
+        e.preventDefault()
+        fetch('http://localhost:3000/login',
+            {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: testo
+                }
+            )}
+        )
+            .then(obj => obj.json())
+            .then(u => u.verified ? setUsername(u.username) : setError(true))
+
+
+
     }
 
-    return(
-        <>
-            <input type={"text"} />
+    return (
+        username === "" ? <>
+            <input type={"text"} onChange={handleChange} value={testo}/>
             <input type={"submit"} onClick={handleSubmit}/>
-
-        </>
+            <p hidden={!error}>Errore</p>
+        </> : prop
     )
 }

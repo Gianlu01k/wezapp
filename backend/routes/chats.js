@@ -3,6 +3,8 @@ const chatsController = require('../controllers/chats')
 
 const router = express.Router()
 
-router.get(':username', chatsController.checkUser)
+router.post('/login',
+    chatsController.checkUser
+)
 
 module.exports = router
