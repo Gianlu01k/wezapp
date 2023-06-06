@@ -36,3 +36,16 @@ export default function Login(prop){
         </> : prop
     )
 }
+
+/*
+ <form onSubmit={handleSubmit}>
+<button type="submit">Invia</button>
+</form>
+
+  <form onSubmit={handleSubmit}>
+
+<button type="submit">
+    <Link to="/seconda-pagina">Apri seconda pagina</Link>
+</button>
+</form>
+ */
