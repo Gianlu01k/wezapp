@@ -1,8 +1,9 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useState} from "react";
-import {Link, redirect} from "react-router-dom";
+import Homepage from "./Homepage";
+import {redirect, Route, Routes} from "react-router-dom";
 
-export default function Login(prop){
+export default function Login(){
     const [testo, setTesto] = useState("")
     const [username, setUsername] = useState("");
     const [error, setError] = useState(false)
@@ -33,7 +34,9 @@ export default function Login(prop){
             <input type={"text"} onChange={handleChange} value={testo}/>
             <input type={"submit"} onClick={handleSubmit}/>
             <p hidden={!error}>Errore</p>
-        </> : prop
+        </> : <Routes>
+            <Route path={"homepage"} element={<Homepage/>}/>
+        </Routes>
     )
 }
 
