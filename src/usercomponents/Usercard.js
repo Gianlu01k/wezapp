@@ -1,9 +1,16 @@
 import React from "react";
+import {Avatar, ListItem, ListItemText} from "@mui/material";
+import {deepOrange} from "@mui/material/colors";
 
 export default function Usercard(props){
     return(
-        <div className={"user-card"}>
-            <p>{props.username}</p>
-        </div>
+        <ListItem button>
+            <Avatar
+                sx={{ bgcolor: deepOrange[500] }}
+                alt={props.username}
+            >{props.username.charAt(0).toUpperCase()}</Avatar>
+            <ListItemText primary={props.username} />
+        </ListItem>
+
     )
 }
