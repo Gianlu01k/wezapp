@@ -1,10 +1,12 @@
-import React from "react";
-import Chat from "./Chat";
+import React, {useState} from "react";
 import Usercard from "./usercomponents/Usercard";
-export default function Sidebar(userarray){
+export default function Sidebar({userarray}){
+
+    const list = userarray.map((el) => <Usercard username={el.username} key={el._id}/>)
     return(
-        <>
-            {userarray.users.map((u) =>{console.log(u);<Usercard username={u.username} index={u._id}/>})}
-        </>
+          <div className={"card-container"}>
+              {list}
+          </div>
+
     )
 }

@@ -1,14 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Home from "./Home";
 import Sidebar from "./Sidebar";
 import './sidehome.css'
-export default function Homepage(users){
-    return(
+export default function Homepage(){
 
-            <>
-                <Sidebar users={users}/>
-                <Home/>
-            </>
+    const [users, setUsers] = useState([])
 
-    )
+    useEffect(()=>{
+        fetch('http://localhost:3000/all')
+            .then(obj => obj.json())
+            .then(data => setUsers(data))
+    },[])
+
+    return <Sidebar userarray={users}/>
+
 }

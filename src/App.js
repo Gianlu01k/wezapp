@@ -6,18 +6,11 @@ import {useEffect, useState} from "react";
 import Registrazione from "./Registrazione";
 
 function App() {
-    const [users, setUsers] = useState([])
-
-    useEffect(()=>{
-        fetch('http://localhost:3000/all')
-            .then(obj => obj.json())
-            .then(data => setUsers(data))
-    },[])
 
   return (
        <Routes>
            <Route path="/" element={<Login />} />
-           <Route path="/homepage" element={<Homepage users={users}/>}/>
+           <Route path="/homepage" element={<Homepage/>}/>
            <Route path={"/registrazione"} element={<Registrazione />}/>
        </Routes>
   );
