@@ -1,12 +1,14 @@
 import React from "react";
 import {useState} from "react";
 import Homepage from "./Homepage";
-import {redirect, Route, Routes} from "react-router-dom";
+import {Link, Redirect, Route, Routes} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function Login(){
     const [testo, setTesto] = useState("")
     const [username, setUsername] = useState("");
     const [error, setError] = useState(false)
+    const navigate = useNavigate();
 
     function handleChange(e){
         setTesto(e.target.value)
@@ -25,20 +27,19 @@ export default function Login(){
             .then(obj => obj.json())
             .then(u => u.verified ? setUsername(u.username) : setError(true))
 
-
-
     }
 
     return (
         username === "" ? <>
             <input type={"text"} onChange={handleChange} value={testo}/>
-            <input type={"submit"} onClick={handleSubmit}/>
-            <p hidden={!error}>Errore</p>
-        </> : <Routes>
-            <Route path={"homepage"} element={<Homepage/>}/>
-        </Routes>
-    )
+                <button onClick={handleSubmit}>Invia</button>
+            <p hidden={!error}>Utente non registrato</p>
+            <p>Non hai un account?<Link to={"/registrazione"}>Registrati ora</Link> </p>
+        </> : navigate('/homepage'))
+
+
 }
+
 
 /*
  <form onSubmit={handleSubmit}>
