@@ -7,4 +7,6 @@ router.post('/login',
     chatsController.checkUser
 )
 
+router.post('/registration', chatsController.addUser)
+
 module.exports = router
