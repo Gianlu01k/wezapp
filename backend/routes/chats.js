@@ -1,12 +1,14 @@
 const express = require('express')
-const chatsController = require('../controllers/chats')
+const usersController = require('../controllers/users')
 
 const router = express.Router()
 
 router.post('/login',
-    chatsController.checkUser
+    usersController.checkUser
 )
 
-router.post('/registration', chatsController.addUser)
+router.post('/registration', usersController.addUser)
+
+router.get('/all', usersController.retrieveAll)
 
 module.exports = router

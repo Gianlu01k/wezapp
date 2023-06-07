@@ -1,11 +1,10 @@
 import React from "react";
 import Chat from "./Chat";
-export default function Sidebar(){
+import Usercard from "./usercomponents/Usercard";
+export default function Sidebar(userarray){
     return(
         <>
-        <Chat />
-            <p>Sidebar</p>
-
+            {userarray.users.map((u) =>{console.log(u);<Usercard username={u.username} index={u._id}/>})}
         </>
     )
 }

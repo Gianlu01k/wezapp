@@ -2,12 +2,12 @@ import React from "react";
 import Home from "./Home";
 import Sidebar from "./Sidebar";
 import './sidehome.css'
-export default function Homepage(){
+export default function Homepage(users){
     return(
 
             <>
-            <Sidebar/>
-            <Home/>
+                <Sidebar users={users}/>
+                <Home/>
             </>
 
     )

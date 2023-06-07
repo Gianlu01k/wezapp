@@ -27,16 +27,23 @@ module.exports = {
                         })
                         .catch(err => {
                             console.log("Errore nella creazione dell'utente", err);
-                            res.sendStatus(500); // Invia un codice di stato di errore al client
+                            res.sendStatus(500);
                         });
                 } else {
-                    res.send({ verified: false }); // Invia la risposta al client
+                    res.send({ verified: false });
                 }
             })
             .catch(err => {
                 console.log("Errore nella ricerca dell'utente", err);
-                res.sendStatus(500); // Invia un codice di stato di errore al client
+                res.sendStatus(500);
             });
+    },
+
+    retrieveAll: (req, res) => {
+        User.find({})
+            .then(obj => res.json(obj))
+            .catch(err=> {console.log("Errore nel recupero degli utenti", err);
+        res.sendStatus(500);} )
     }
 
 }
