@@ -1,15 +1,17 @@
 const Chat = require('../models/chat')
-const Messages = require('../models/message')
+const Message = require('../models/message')
 
 module.exports ={
     retrieveChats:(req,res) => {
         Chat.find({})
-            .then(obj =>  { const idchat=obj._id;
-                    Messages.find({chat: idchat})
-                        .then(data => res.json(data))
-                        .then(messages => console.log(messages))
-                }
-            )
+            .then(obj => res.json(obj))
+
+    },
+
+    retrieveMessages:(req, res)=>{
+        Message.find({chat: req.body.idselected})
+            .then(obj => res.json(obj))
+
     }
 }
 
