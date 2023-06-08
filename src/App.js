@@ -7,10 +7,12 @@ import Registrazione from "./Registrazione";
 
 function App() {
 
+    const [loggedUser, setLoggedUser] = useState({_id:"", fistname:"", lastname:"", username:"", password:""})
+
   return (
        <Routes>
-           <Route path="/" element={<Login />} />
-           <Route path="/homepage" element={<Homepage/>}/>
+           <Route path="/" element={<Login func={setLoggedUser}/>} />
+           <Route path="/homepage" element={<Homepage loggedUser={loggedUser._id}/>}/>
            <Route path={"/registrazione"} element={<Registrazione />}/>
        </Routes>
   );

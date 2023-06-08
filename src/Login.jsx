@@ -4,12 +4,11 @@ import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {Alert, Box, Button, Container, CssBaseline, TextField} from "@mui/material";
 
-export default function Login() {
+export default function Login({func}) {
     const [testo, setTesto] = useState({username: "", password: ""})
-    const [username, setUsername] = useState("");
+    const [user, setUser] = useState({_id:"", fistname:"", lastname:"", username:"", password:""});
     const [error, setError] = useState(false)
     const navigate = useNavigate();
-
     function handleChange(e) {
         setTesto({...testo, [e.target.name]: e.target.value})
     }
@@ -28,12 +27,12 @@ export default function Login() {
             }
         )
             .then(obj => obj.json())
-            .then(u => u.verified ? setUsername(u.username) : setError(true))
+            .then(u => u.verified ? (setUser(u.user), func(u.user)) : setError(true))
 
     }
 
     return (
-        username === "" ? <Container component="main" maxWidth="xs"><CssBaseline/><Box sx={{
+        user.username === "" ? <Container component="main" maxWidth="xs"><CssBaseline/><Box sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',

@@ -2,11 +2,12 @@ import React, {useState} from "react";
 import Usercard from "./usercomponents/Usercard";
 import {Avatar, List} from "@mui/material";
 import {deepOrange} from "@mui/material/colors";
-export default function Sidebar({userarray}){
+export default function Sidebar(props){
 
-    const list = userarray.map((el) =>
+
+    const list = props.userarray.map((el) =>
         <>
-            <Usercard username={el.username} key={el._id}/>
+            <Usercard user={el} key={el._id} setDest={props.setDest}/>
         </>
         )
     return(
