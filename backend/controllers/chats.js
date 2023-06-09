@@ -25,6 +25,15 @@ module.exports ={
             console.log("Errore nell'invio del messaggio", err);
             res.sendStatus(500);
         });
+    },
+    addChat:(req,res)=>{
+        Chat.create({
+            users: req.body.users
+        }).then(obj => res.json(obj)).then(chat => res.send(chat))
+            .catch(err => {
+            console.log("Errore nella creazione della chat", err);
+            res.sendStatus(500);
+        });
     }
 }
 

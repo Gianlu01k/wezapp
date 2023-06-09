@@ -18,5 +18,7 @@ router.get('/chat/messages', chatController.retrieveMessages)
 
 router.post('/chat/newmessage', chatController.addMessage)
 
+router.post('/chat/newchat', chatController.addChat)
+
 
 module.exports = router

@@ -14,7 +14,7 @@ export default function Home(props) {
     const [message, setMessage] = useState("");
     const [listMessages, setListMessages] = useState([]);
     const [messagePending, setMessagePending] = useState(false);
-    const scrollableBoxRef = useRef(null);
+    const scrollableBoxRef = useRef({ behavior: 'smooth', block: 'end' });
 
     function handleChange(e) {
         setMessage(e.target.value);
@@ -76,23 +76,48 @@ export default function Home(props) {
                             }),
                         }).then(() => setMessage(""));
                     }
+                }else{
+                    fetch("http://localhost:3000/chat/newchat",{
+                        method: "post",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            users: [props.usr, props.rec]
+                        }),
+                    }).then(obj => obj.json()).then(
+                        chat => {
+                            const idnewchat = chat._id;
+                            fetch("http://localhost:3000/chat/newmessage", {
+                                method: "post",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    mittente: props.usr,
+                                    content: message,
+                                    chat: idnewchat,
+                                }),
+                            }).then(() => setMessage(""));
+                        }
+                    )
                 }
                 setMessagePending(!messagePending);
+                setMessage("")
             });
     }
-    const listStyle = {
-        backgroundColor: '#dabdab',
-    };
+
 
     return (
         <>
 
         <Container maxWidth="x1">
-            <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#d28dd9', height: '80vh' }}>
-                <p><Avatar
-                    sx={{ bgcolor: deepOrange[500] }}
-                    alt={props.username}>{props.username.charAt(0).toUpperCase()}</Avatar>{props.username}</p>
-                <List style={listStyle}>
+            <Box sx={{
+                bgcolor: '#FFFFF',
+                p: 1,
+            }}>
+            <p><Avatar
+                sx={{ bgcolor: deepOrange[500] }}
+                alt={props.username}>{props.username.charAt(0).toUpperCase()}</Avatar>{props.username}</p></Box>
+            <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh' }}>
+
+                <List>
                     {listMessages.map((m) => (
                         <Message
                             key={m._id}
@@ -105,24 +130,33 @@ export default function Home(props) {
             </ScrollableBox>
 
 
-                <Grid container spacing={2} alignItems="center">
-                    <Grid item>
+                <Grid container sx={{
+                    marginTop: 1,
+
+                }} >
+                    <Grid item sx={{
+                       width: 0.75,
+                    }}>
                         <TextField
                             fullWidth
                             id="outlined-controlled"
                             name="message"
                             value={message}
                             onChange={handleChange}
+                            sx={{
+                                borderRadius: 5,
+                            }}
                         />
                     </Grid>
-                    <Grid item>
+                    <Grid item sx={{width: 0.2,
+                    marginLeft:2}}>
                         <Fab
                             variant="extended"
                             color="primary"
                             aria-label="add"
                             onClick={handleClick}
                         >
-                            <NavigationIcon sx={{ mr: 1 }} />
+                            <NavigationIcon sx={{ mr: 0.5 }} />
                             Invia
                         </Fab>
                     </Grid>
