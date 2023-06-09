@@ -18,7 +18,7 @@ export default function Homepage({loggedUser}){
     return(
         <Grid container spacing={2}>
             <Grid xs={2}><Sidebar userarray={users} setDest={setReceiver}/> </Grid>
-            <Grid xs={10}><Home rec={receiver._id} usr={loggedUser} /></Grid>
+            <Grid xs={10}><Home rec={receiver._id} username={receiver.username} usr={loggedUser} /></Grid>
         </Grid>
     )
 }

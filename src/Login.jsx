@@ -3,7 +3,12 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {Alert, Box, Button, Container, CssBaseline, TextField} from "@mui/material";
+import Avatar from '@mui/material/Avatar';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const defaultTheme = createTheme();
 export default function Login({func}) {
     const [testo, setTesto] = useState({username: "", password: ""})
     const [user, setUser] = useState({_id:"", fistname:"", lastname:"", username:"", password:""});
@@ -38,6 +43,23 @@ export default function Login({func}) {
             flexDirection: 'column',
             alignItems: 'center',
         }}>
+            <ThemeProvider theme={defaultTheme}>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline />
+                    <Box
+                        sx={{
+                            marginTop: 8,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                            <LockOutlinedIcon />
+                        </Avatar>
+                        <Typography component="h1" variant="h5">
+                            Login
+                        </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                 <TextField margin="normal"
                            required
@@ -76,8 +98,12 @@ export default function Login({func}) {
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}><p>Non hai un account? <Link variant="body2" to={"/registrazione"}>Registrati ora</Link></p></Box>
-            </Box></Box>
-        </Container> : navigate('/homepage'))
+            </Box>
+                    </Box>
+        </Container>
+        </ThemeProvider>
+        </Box>
+        </Container>: navigate('/homepage'))
 
 
 }
