@@ -19,7 +19,7 @@ export default function Message(props) {
             <Box
                 sx={{
                     backgroundColor: messageColor,
-                    borderRadius: 10,
+                    borderRadius: 8,
                     maxWidth: "100%",
                 }}
             >
@@ -33,3 +33,4 @@ export default function Message(props) {
         </ListItem>
     );
 }
+//
