@@ -14,7 +14,7 @@ router.get('/all', usersController.retrieveAll)
 
 router.post('/chat', chatController.retrieveChats)
 
-router.post('/chat/messages', chatController.retrieveMessages)
+router.get('/chat/messages', chatController.retrieveMessages)
 
 
 module.exports = router

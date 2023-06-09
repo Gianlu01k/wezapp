@@ -9,7 +9,7 @@ module.exports ={
     },
 
     retrieveMessages:(req, res)=>{
-        Message.find({chat: req.body.idselected})
+        Message.find({})
             .then(obj => res.json(obj))
 
     }
