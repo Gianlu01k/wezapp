@@ -1,7 +1,6 @@
 import React from "react";
-import {List, ListItem, ListItemText} from "@mui/material";
-import Message from "./Message";
-import Usercard from "./usercomponents/Usercard";
+import {List} from "@mui/material";
+
 
 export default function Chat({msg}){
 

@@ -7,7 +7,7 @@ import Registrazione from "./Registrazione";
 
 function App() {
 
-    const [loggedUser, setLoggedUser] = useState({_id:"648054b969a29465a5f6c408", fistname:"", lastname:"", username:"", password:""})
+    const [loggedUser, setLoggedUser] = useState({_id:"", fistname:"", lastname:"", username:"", password:""})
 
   return (
        <Routes>

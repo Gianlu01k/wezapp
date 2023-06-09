@@ -12,9 +12,19 @@ module.exports ={
         Message.find({})
             .then(obj => res.json(obj))
 
+    },
+
+    addMessage:(req, res) => {
+        Message.create(
+            {
+                mittente: req.body.mittente,
+                content: req.body.content,
+                chat: req.body.chat
+            }
+        ).catch(err => {
+            console.log("Errore nell'invio del messaggio", err);
+            res.sendStatus(500);
+        });
     }
 }
 
-/* data.forEach((chat) => {
-                if((chat.users[0] === req.body._id1 || chat.users[1] === req.body._id2)||(chat.users[1] === req.body._id1 || chat.users[0] === req.body._id2)){
-                  */
