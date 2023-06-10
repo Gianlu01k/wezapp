@@ -7,5 +7,7 @@ router.post('/', friendsController.makeFriend)
 
 router.get('/pendingrequests', friendsController.retrieveRequests)
 
+router.post('/accept', friendsController.acceptRequest)
+
 
 module.exports = router

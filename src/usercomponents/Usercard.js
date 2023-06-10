@@ -18,15 +18,20 @@ export default function Usercard(props) {
 
     function handleFriend(e){
         e.preventDefault();
-        fetch('http://localhost:3000/friends', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                  user1: loggedUser,
-                user2: props.user._id
-                }
-            )
-        }).then(obj => obj.json()).then(data=> console.log(data))
+        fetch('http://localhost:3000/friends/pendingrequests')
+            .then(requests => requests.json())
+            .then(data => data.filter(friend => friend.user1 === loggedUser || friend.user2 === loggedUser))
+            .then(myfriends => myfriends.filter(friend => friend.user1 === props.user._id || friend.user2 === props.user._id))
+            .then(exfriend => exfriend.length === 0 ?  fetch('http://localhost:3000/friends', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                        user1: loggedUser,
+                        user2: props.user._id
+                    }
+                )
+            }).then(obj => obj.json()).then(data=> console.log(data)) : alert("Amicizia già inviata"))
+
     }
 
 

@@ -15,5 +15,11 @@ module.exports ={
         Friend.find({})
             .then(obj => res.json(obj))
             .catch(()=> res.sendStatus(500))
+    },
+
+    acceptRequest:(req, res)=>{
+        Friend.updateOne({_id: req.body.idfriend}, { $set: { req2: true } })
+            .then(obj => res.json(obj))
+            .catch(()=> res.sendStatus(500))
     }
 }
