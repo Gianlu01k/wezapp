@@ -20,7 +20,8 @@ module.exports = {
                         firstname: req.body.firstname,
                         lastname: req.body.lastname,
                         username: req.body.username,
-                        password: req.body.password
+                        password: req.body.password,
+                        friends: []
                     })
                         .then(r => {
                             res.json({r, verified:true});

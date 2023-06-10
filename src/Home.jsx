@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 
 const ScrollableBox = styled(Box)`
   overflow-y: scroll;
-  max-height: 80vh;
+  max-height: 70vh;
 `;
 export default function Home(props) {
     const [message, setMessage] = useState("");
@@ -116,11 +116,30 @@ useEffect(() => {
             <Box sx={{
                 bgcolor: '#FFFFF',
                 p: 1,
+                display: 'flex',
+                alignItems: "center",
+                my: 2
             }}>
-            <p><Avatar
-                sx={{ bgcolor: deepOrange[500] }}
-                alt={props.username}>{props.username.charAt(0).toUpperCase()}</Avatar>{props.username}</p></Box>
-            <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh' }}>
+                <Avatar
+                    sx={{
+                        bgcolor: deepOrange[500],
+                        display: props.rec === "" ? "none" : "flex",
+                        height: "2rem",
+                        width: "2rem",
+                        marginRight: "1rem",
+                    }}
+                    alt={props.username}
+                >
+                    {props.username.charAt(0).toUpperCase()}
+                </Avatar>
+                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                    {props.username}
+                </Typography>
+            </Box>
+            <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh',
+                '&::-webkit-scrollbar': {
+                    display: 'none',
+                }, }}>
 
                 <List>
                     {listMessages.map((m) => (

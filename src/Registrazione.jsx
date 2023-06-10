@@ -81,6 +81,7 @@ export default function Registrazione(){
                                         autoComplete="given-name"
                                         onChange={handleChange}
                                         value={form.firstname}
+                                        autoFocus
                                          />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -94,7 +95,7 @@ export default function Registrazione(){
                                         autoComplete="family-name"
                                         onChange={handleChange}
                                         value={form.lastname}
-                                        autoFocus
+
                                     />
                                 </Grid>
                                 <Grid item xs={12}>

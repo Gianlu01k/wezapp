@@ -77,6 +77,7 @@ export default function Login({func}) {
                            label="Username"
                            name={"username"}
                            value={testo.u}
+                           autoFocus
                            onChange={handleChange}></TextField>
                 <TextField margin="normal"
                            required

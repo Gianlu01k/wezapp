@@ -24,7 +24,6 @@ export default function Sidebar(props){
                 flexDirection: 'column',
                 alignItems: 'center'}} onClick={()=>{
                     Cookies.remove('sessionID');
-                    console.log("Sessione finita")
                 }} > <Link variant="body2" to={"/"}>Esci</Link></Button>
         </>
 
