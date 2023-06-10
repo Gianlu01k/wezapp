@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 
 const ScrollableBox = styled(Box)`
   overflow-y: scroll;
-  max-height: 70vh;
+  max-height: 100vh;
 `;
 export default function Home(props) {
     const [message, setMessage] = useState("");
@@ -112,7 +112,7 @@ useEffect(() => {
     return (
         <>
 
-        <Container maxWidth="x1">
+        <Container maxWidth="lg">
             <Box sx={{
                 bgcolor: '#FFFFF',
                 p: 1,
@@ -139,7 +139,7 @@ useEffect(() => {
             <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh',
                 '&::-webkit-scrollbar': {
                     display: 'none',
-                }, }}>
+                },borderRadius: 5 }}>
 
                 <List>
                     {listMessages.map((m) => (
@@ -154,39 +154,37 @@ useEffect(() => {
             </ScrollableBox>
 
 
-                <Grid container sx={{
-                    marginTop: 1,
+            <Grid container sx={{ marginTop: 1 }}>
+                <Grid item sx={{ flexGrow: 1 }}>
+                    <TextField
+                        fullWidth
+                        id="outlined-controlled"
+                        name="message"
+                        value={message}
+                        onChange={handleChange}
+                        inputProps={{
+                            style: {
+                                borderRadius: '20px',
+                            },
+                        }}
+                    />
 
-                }} >
-                    <Grid item sx={{
-                       width: 0.75,
-                    }}>
-                        <TextField
-                            fullWidth
-                            id="outlined-controlled"
-                            name="message"
-                            value={message}
-                            onChange={handleChange}
-                            sx={{
-                                borderRadius: 5,
-                            }}
-                        />
-                    </Grid>
-                    <Grid item sx={{width: 0.2,
-                    marginLeft:2}}>
-                        <Fab
-                            variant="extended"
-                            color="primary"
-                            aria-label="add"
-                            onClick={handleClick}
-                        >
-                            <NavigationIcon sx={{ mr: 0.5 }} />
-                            Invia
-                        </Fab>
-                    </Grid>
                 </Grid>
-            </Container>
+                <Grid item sx={{ marginLeft: 2, alignSelf: 'center' }}>
+                    <Fab
+                        variant="extended"
+                        color="primary"
+                        label="Scrivi un messaggio"
+                        onClick={handleClick}
+                    >
+                        <NavigationIcon sx={{ mr: 0.5 }} />
+                        Invia
+                    </Fab>
+                </Grid>
+            </Grid>
+
+
+        </Container>
         </>
     );
 }
-//
