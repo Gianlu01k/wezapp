@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import Usercard from "./usercomponents/Usercard";
-import {Avatar, List} from "@mui/material";
-import {deepOrange} from "@mui/material/colors";
+import {Avatar, Button, List} from "@mui/material";
+import Cookies from 'js-cookie';
+import {Link} from "react-router-dom";
 export default function Sidebar(props){
 
 
@@ -11,9 +12,18 @@ export default function Sidebar(props){
         </>
         )
     return(
-        <List component="nav" aria-label="mailbox folders">
+        <>
+            <List component="nav" aria-label="mailbox folders">
               {list}
         </List>
+            <Button sx={{  marginTop: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'}} onClick={()=>{
+                    Cookies.remove('sessionID');
+                    console.log("Sessione finita")
+                }} > <Link variant="body2" to={"/"}>Esci</Link></Button>
+        </>
 
     )
 }

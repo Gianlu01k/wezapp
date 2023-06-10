@@ -10,6 +10,7 @@ db.once("open", () => {
     console.log("Connesso al DB")
 })
 
+
 const router = require('./routes/chats')
 
 app.use(cors())

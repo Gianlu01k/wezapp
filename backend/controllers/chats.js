@@ -29,7 +29,7 @@ module.exports ={
     addChat:(req,res)=>{
         Chat.create({
             users: req.body.users
-        }).then(obj => res.json(obj)).then(chat => res.send(chat))
+        }).then(obj => res.json(obj))
             .catch(err => {
             console.log("Errore nella creazione della chat", err);
             res.sendStatus(500);

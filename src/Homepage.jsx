@@ -3,6 +3,11 @@ import Home from "./Home";
 import Sidebar from "./Sidebar";
 import './sidehome.css'
 import {Box, CssBaseline, Grid} from "@mui/material";
+import Cookies from 'js-cookie';
+
+const sessionID = Cookies.get('sessionID');
+console.log("loggato ora"+sessionID)
+
 export default function Homepage({loggedUser}){
 
     const [users, setUsers] = useState([])
@@ -18,7 +23,7 @@ export default function Homepage({loggedUser}){
     return(
         <Grid container spacing={2}>
             <Grid xs={2}><Sidebar userarray={users} setDest={setReceiver}/> </Grid>
-            <Grid xs={10}><Home rec={receiver._id} rec-fn={receiver.fistname} rec-ln={receiver.lastname} username={receiver.username} usr={loggedUser} /></Grid>
+            <Grid xs={10}><Home rec={receiver._id} rec-fn={receiver.fistname} rec-ln={receiver.lastname} username={receiver.username} usr={sessionID} /></Grid>
         </Grid>
     )
 }

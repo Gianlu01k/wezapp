@@ -4,7 +4,7 @@ import NavigationIcon from "@mui/icons-material/Navigation";
 import Message from "./Message";
 import { styled } from "@mui/system";
 import {deepOrange} from "@mui/material/colors";
-
+import Cookies from "js-cookie";
 
 const ScrollableBox = styled(Box)`
   overflow-y: scroll;
@@ -15,7 +15,7 @@ export default function Home(props) {
     const [listMessages, setListMessages] = useState([]);
     const [messagePending, setMessagePending] = useState(false);
     const scrollableBoxRef = useRef({ behavior: 'smooth', block: 'end' });
-
+    const loggedUser = Cookies.get('sessionID')
     function handleChange(e) {
         setMessage(e.target.value);
     }
@@ -30,8 +30,8 @@ export default function Home(props) {
             .then((chat) => {
                 let selectedChat = chat.filter(
                     (el) =>
-                        (el.users[0] === props.usr && el.users[1] === props.rec) ||
-                        (el.users[1] === props.usr && el.users[0] === props.rec)
+                        (el.users[0] === loggedUser && el.users[1] === props.rec) ||
+                        (el.users[1] === loggedUser && el.users[0] === props.rec)
                 );
                 setListMessages([]);
                 if (selectedChat.length !== 0) {
@@ -45,7 +45,7 @@ export default function Home(props) {
                         });
                 }
             });
-    }, [props.rec, props.usr, messagePending]);
+    }, [props.rec, loggedUser, messagePending]);
 
     function handleClick(e) {
         e.preventDefault();
@@ -59,8 +59,8 @@ export default function Home(props) {
             .then((chat) => {
                 selectedChat = chat.filter(
                     (el) =>
-                        (el.users[0] === props.usr && el.users[1] === props.rec) ||
-                        (el.users[1] === props.usr && el.users[0] === props.rec)
+                        (el.users[0] === loggedUser && el.users[1] === props.rec) ||
+                        (el.users[1] === loggedUser && el.users[0] === props.rec)
                 );
             })
             .then(() => {
@@ -70,7 +70,7 @@ export default function Home(props) {
                             method: "post",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
-                                mittente: props.usr,
+                                mittente: loggedUser,
                                 content: message,
                                 chat: selectedChat[0]._id,
                             }),
@@ -81,7 +81,7 @@ export default function Home(props) {
                         method: "post",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
-                            users: [props.usr, props.rec]
+                            users: [loggedUser, props.rec]
                         }),
                     }).then(obj => obj.json()).then(
                         chat => {
@@ -90,11 +90,11 @@ export default function Home(props) {
                                 method: "post",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
-                                    mittente: props.usr,
+                                    mittente: loggedUser,
                                     content: message,
                                     chat: idnewchat,
                                 }),
-                            }).then(() => setMessage(""));
+                            })
                         }
                     )
                 }
@@ -123,7 +123,7 @@ export default function Home(props) {
                             key={m._id}
                             msg={m.content}
                             sender={m.mittente}
-                            loggedUser={props.usr}
+                            loggedUser={loggedUser}
                         />
                     ))}
                 </List>

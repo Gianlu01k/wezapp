@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Cookies from 'js-cookie';
 
 const defaultTheme = createTheme();
 export default function Login({func}) {
@@ -32,7 +33,15 @@ export default function Login({func}) {
             }
         )
             .then(obj => obj.json())
-            .then(u => u.verified ? (setUser(u.user), func(u.user)) : setError(true))
+            .then(u => {
+                if (u.verified) {
+                    setUser(u.user);
+                    func(u.user);
+                    Cookies.set('sessionID', u.user._id);
+                } else {
+                    setError(true);
+                }
+            })
 
     }
 
@@ -97,8 +106,10 @@ export default function Login({func}) {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                }}><p>Non hai un account? <Link variant="body2" to={"/registrazione"}>Registrati ora</Link></p></Box>
+                    }}><p>Non hai un account? <Link variant="body2" to={"/registrazione"}>Registrati ora</Link></p></Box>
+
             </Box>
+
                     </Box>
         </Container>
         </ThemeProvider>
