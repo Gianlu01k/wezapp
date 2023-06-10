@@ -5,6 +5,8 @@ import Message from "./Message";
 import { styled } from "@mui/system";
 import {deepOrange} from "@mui/material/colors";
 import Cookies from "js-cookie";
+import Notifications from "./Notifications";
+
 
 const ScrollableBox = styled(Box)`
   overflow-y: scroll;
@@ -49,6 +51,7 @@ useEffect(() => {
                             setListMessages(mess);
                         });
                 }
+
             });
     }, [props.rec, loggedUser, messagePending]);
 
@@ -108,6 +111,10 @@ useEffect(() => {
             });
     }
 
+    function handleAdvice(){
+
+    }
+
 
     return (
         <>
@@ -135,7 +142,9 @@ useEffect(() => {
                 <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                     {props.username}
                 </Typography>
+                <Notifications/>
             </Box>
+
             <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh',
                 '&::-webkit-scrollbar': {
                     display: 'none',

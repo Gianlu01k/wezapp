@@ -38,6 +38,7 @@ export default function Login({func}) {
                     setUser(u.user);
                     func(u.user);
                     Cookies.set('sessionID', u.user._id);
+                    Cookies.set('sessionUsername', u.user.username);
                 } else {
                     setError(true);
                 }

@@ -6,7 +6,6 @@ import {Box, CssBaseline, Grid} from "@mui/material";
 import Cookies from 'js-cookie';
 
 const sessionID = Cookies.get('sessionID');
-console.log("loggato ora"+sessionID)
 
 export default function Homepage({loggedUser}){
 

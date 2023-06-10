@@ -12,8 +12,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Sidebar(props){
 
+const [searchUt,setSearchUt]=useState("")
+const loggedUsername = Cookies.get('sessionUsername')
+    const handleSearch=(e) => {
+    setSearchUt(e.target.value)
+    }
 
-    const list = props.userarray.map((el) =>
+    const filteredUsers=props.userarray.filter((el)=>
+    el.username.toLowerCase().startsWith(searchUt.toLowerCase()))
+
+
+    const list = filteredUsers.map((el) =>
         <>
             <Usercard user={el} key={el._id} setDest={props.setDest}/>
         </>

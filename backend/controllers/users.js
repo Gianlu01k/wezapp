@@ -20,8 +20,7 @@ module.exports = {
                         firstname: req.body.firstname,
                         lastname: req.body.lastname,
                         username: req.body.username,
-                        password: req.body.password,
-                        friends: []
+                        password: req.body.password
                     })
                         .then(r => {
                             res.json({r, verified:true});
@@ -45,6 +44,13 @@ module.exports = {
             .then(obj => res.json(obj))
             .catch(err=> {console.log("Errore nel recupero degli utenti", err);
         res.sendStatus(500);} )
+    },
+
+    retrieveOne:(req, res) => {
+        User.findOne({_id: req.body.id})
+            .then(obj => res.json(obj))
+            .catch(err=> {console.log("Errore nel recupero dell' utente", err);
+                res.sendStatus(500);} )
     }
 
 }
