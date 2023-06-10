@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef } from "react";
-import {Avatar, Box, Container, Fab, Grid, List, TextField} from "@mui/material";
+import {Avatar, Box, Container, Fab, Grid, List, TextField,Typography } from "@mui/material";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Message from "./Message";
 import { styled } from "@mui/system";
@@ -19,6 +19,11 @@ export default function Home(props) {
     function handleChange(e) {
         setMessage(e.target.value);
     }
+useEffect(() => {
+        if (scrollableBoxRef.current) {
+            scrollableBoxRef.current.scrollTop = scrollableBoxRef.current.scrollHeight;
+        }
+    }, [listMessages]);
 
     useEffect(() => {
         fetch("http://localhost:3000/chat", {
