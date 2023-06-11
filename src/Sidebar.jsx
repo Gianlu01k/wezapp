@@ -29,9 +29,10 @@ const loggedUsername = Cookies.get('sessionUsername')
         )
     return(
         <>
-        <Container sx={{ marginLeft: '5rem' }} >
-                <Box sx={{ mx: 3, display: 'flex', alignItems: 'center' }}>
-                <h1 sx={{ flexGrow: 1 }}>Chats</h1> </Box>
+            <Container sx={{ marginLeft: '3rem', width: '90%', }}>
+                <Box sx={{ mx: 4, display: 'flex', alignItems: 'center', }}>
+                    <h1 sx={{ flexGrow: 1 }}>Chats</h1>
+                </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar
                         sx={{ bgcolor: deepOrange[500], marginRight: '1rem', mx: 3, my: 1 }}
@@ -39,31 +40,42 @@ const loggedUsername = Cookies.get('sessionUsername')
                     >
                         {loggedUsername.charAt(0).toUpperCase()}
                     </Avatar>
-                    <TextField label="Cerca" variant="outlined" value={searchUt} onChange={handleSearch}  sx={{
-                        borderRadius: '10px', width:'100%'
-                    }} />
+                    <TextField
+                        label="Cerca"
+                        variant="outlined"
+                        value={searchUt}
+                        onChange={handleSearch}
+                        sx={{
+                            borderRadius: 10,
+                            width: '100%',
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: 10,
+                                height: '50px',
+                                width: '100%',
+                            },
+                        }}
+                    />
+                </Box>
 
-            </Box>
+                <List component="nav" aria-label="mailbox folders">
+                    {list}
+                </List>
 
-            <List component="nav" aria-label="mailbox folders">
-              {list}
-        </List>
+                <IconButton
+                    component={Link}
+                    to="/"
+                    sx={{
+                        mx: 3,
+                        fontSize: '1rem',
+                    }}
+                    onClick={() => {
+                        Cookies.remove('sessionID');
+                    }}
+                >
+                    <LogoutIcon />
+                </IconButton>
+            </Container>
 
-             <IconButton
-             component={Link}
-             to="/"
-             sx={{
-                 mx: 3,
-                 fontSize: '1rem'
-
-             }}
-             onClick={() => {
-                 Cookies.remove('sessionID');
-             }}
-         >
-             <LogoutIcon />
-             </IconButton>
-        </Container>
         </>
 
     )

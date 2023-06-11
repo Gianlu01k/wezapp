@@ -10,18 +10,19 @@ import Notifications from "./Notifications";
 
 const ScrollableBox = styled(Box)`
   overflow-y: scroll;
-  max-height: 100vh;
+  max-height: 70vh;
 `;
 export default function Home(props) {
     const [message, setMessage] = useState("");
     const [listMessages, setListMessages] = useState([]);
     const [messagePending, setMessagePending] = useState(false);
+    let [selectedChat, setSelectedChat] = useState(null);
     const scrollableBoxRef = useRef({ behavior: 'smooth', block: 'end' });
     const loggedUser = Cookies.get('sessionID')
     function handleChange(e) {
         setMessage(e.target.value);
     }
-useEffect(() => {
+    useEffect(() => {
         if (scrollableBoxRef.current) {
             scrollableBoxRef.current.scrollTop = scrollableBoxRef.current.scrollHeight;
         }
@@ -35,11 +36,12 @@ useEffect(() => {
         })
             .then((data) => data.json())
             .then((chat) => {
-                let selectedChat = chat.filter(
+                selectedChat = chat.filter(
                     (el) =>
                         (el.users[0] === loggedUser && el.users[1] === props.rec) ||
                         (el.users[1] === loggedUser && el.users[0] === props.rec)
                 );
+
                 setListMessages([]);
                 if (selectedChat.length !== 0) {
                     fetch(`http://localhost:3000/chat/messages`)
@@ -48,6 +50,7 @@ useEffect(() => {
                             const mess = messages.filter(
                                 (msg) => msg.chat === selectedChat[0]._id
                             );
+                            setSelectedChat(mess)
                             setListMessages(mess);
                         });
                 }
@@ -119,81 +122,107 @@ useEffect(() => {
     return (
         <>
 
-        <Container maxWidth="lg">
-            <Box sx={{
-                bgcolor: '#FFFFF',
-                p: 1,
-                display: 'flex',
-                alignItems: "center",
-                my: 2
-            }}>
-                <Avatar
-                    sx={{
-                        bgcolor: deepOrange[500],
-                        display: props.rec === "" ? "none" : "flex",
-                        height: "2rem",
-                        width: "2rem",
-                        marginRight: "1rem",
-                    }}
-                    alt={props.username}
-                >
-                    {props.username.charAt(0).toUpperCase()}
-                </Avatar>
-                <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                    {props.username}
-                </Typography>
-                <Notifications/>
-            </Box>
-
-            <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh',
-                '&::-webkit-scrollbar': {
-                    display: 'none',
-                },borderRadius: 5 }}>
-
-                <List>
-                    {listMessages.map((m) => (
-                        <Message
-                            key={m._id}
-                            msg={m.content}
-                            sender={m.mittente}
-                            loggedUser={loggedUser}
-                        />
-                    ))}
-                </List>
-            </ScrollableBox>
-
-
-            <Grid container sx={{ marginTop: 1 }}>
-                <Grid item sx={{ flexGrow: 1 }}>
-                    <TextField
-                        fullWidth
-                        id="outlined-controlled"
-                        name="message"
-                        value={message}
-                        onChange={handleChange}
-                        inputProps={{
-                            style: {
-                                borderRadius: '20px',
-                            },
+            <Container maxWidth="lg">
+                <Box sx={{
+                    bgcolor: '#adaba8',
+                    p: 1,
+                    display: 'flex',
+                    alignItems: "center",
+                    my: 2,
+                }}>
+                    <Avatar
+                        sx={{
+                            bgcolor: deepOrange[500],
+                            display: props.rec === "" ? "none" : "flex",
+                            height: "2rem",
+                            width: "2rem",
+                            marginRight: "1rem",
                         }}
-                    />
-
-                </Grid>
-                <Grid item sx={{ marginLeft: 2, alignSelf: 'center' }}>
-                    <Fab
-                        variant="extended"
-                        color="primary"
-                        label="Scrivi un messaggio"
-                        onClick={handleClick}
+                        alt={props.username}
                     >
-                        <NavigationIcon sx={{ mr: 0.5 }} />
-                        Invia
-                    </Fab>
-                </Grid>
-            </Grid>
+                        {props.username.charAt(0).toUpperCase()}
+                    </Avatar>
+                    <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+                        {props.username}
+                    </Typography>
+
+                    {selectedChat ? (
+                        <Box sx={{ marginLeft: 'auto' }}>
+                            <Notifications />
+                        </Box>
+                    ) : null}
+                </Box>
+
+                {selectedChat ? (
+                    <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh',
+                        '&::-webkit-scrollbar': {
+                            display: 'none',
+                        },borderRadius: 5 }}>
+
+                        <List>
+                            {listMessages.map((m) => (
+                                <Message
+                                    key={m._id}
+                                    msg={m.content}
+                                    sender={m.mittente}
+                                    loggedUser={loggedUser}
+                                />
+                            ))}
+                        </List>
+                    </ScrollableBox>
+                ) : (
+                    <>
+                        <Container maxWidth="lg">
+                            <Box sx={{
+                                p: 1,
+                                display: 'flex',
+                                alignItems: "center",
+                                my: 2
+                            }}>
+                                <Typography variant="h5">Logo</Typography>
+                                <Box sx={{ marginLeft: 'auto' }}>
+                                    <Notifications />
+                                </Box>
+                            </Box>
+                        </Container>
+                    </>
+                )}
 
 
-        </Container>
+                {selectedChat && (
+                    <Grid container sx={{ marginTop: 1 }}>
+                        <Grid item sx={{ flexGrow: 1 }}>
+                            <TextField
+                                fullWidth
+                                label="Scrivi un messaggio"
+                                id="outlined-controlled"
+                                name="message"
+                                value={message}
+                                onChange={handleChange}
+                                sx={{
+                                    borderRadius: 10,
+                                    '& .MuiOutlinedInput-root': {
+                                        borderRadius: 10,
+                                        height:'50px',
+                                    },
+                                }}
+                            />
+
+                        </Grid>
+                        <Grid item sx={{ marginLeft: 2, alignSelf: 'center' }}>
+                            <Fab
+                                variant="extended"
+                                color="primary"
+                                label="Scrivi un messaggio"
+                                onClick={handleClick}
+                            >
+                                <NavigationIcon sx={{ mr: 0.5 }} />
+                                Invia
+                            </Fab>
+                        </Grid>
+                    </Grid>
+                )}
+            </Container>
         </>
     );
 }
