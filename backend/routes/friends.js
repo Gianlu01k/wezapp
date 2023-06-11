@@ -9,5 +9,7 @@ router.get('/pendingrequests', friendsController.retrieveRequests)
 
 router.post('/accept', friendsController.acceptRequest)
 
+router.post('/one', friendsController.retrieveOne)
+
 
 module.exports = router

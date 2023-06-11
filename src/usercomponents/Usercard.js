@@ -1,23 +1,43 @@
-import React from "react";
-import {Avatar, Button, Icon, ListItem, ListItemText, styled} from "@mui/material";
-import {deepOrange, purple} from "@mui/material/colors";
-import PeopleIcon from '@mui/icons-material/People';
+import React, {useEffect, useState} from "react";
+import {Avatar, Button, ListItem, ListItemText} from "@mui/material";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Cookies from "js-cookie";
 import IconButton from '@mui/material/IconButton';
+import GroupIcon from '@mui/icons-material/Group';
 
 export default function Usercard(props) {
 
 
     const loggedUser = Cookies.get('sessionID')
+    const [isFriend, setIsFriend] = useState(false)
 
     function handleClick(e) {
-        props.setDest(props.user)
+       if(isFriend) {
+            props.setDest(props.user)
+        }else{
+           alert("Non siete ancora amici. Invia una richiesta prima di chattare")
+       }
     }
+    useEffect(()=> {
+        fetch('http://localhost:3000/friends/pendingrequests', {
+            method: 'get',
+            headers: {'Content-Type': 'application/json'},
+        }).then(data => data.json())
+            .then(requests => {
+                requests.forEach((el) => {
+
+                    if ((el.user1 === props.id && el.user2 === loggedUser) || (el.user2 === props.id && el.user1 === loggedUser)) {
+
+                        if (el.req2 === true) {
+                            setIsFriend(true)
+
+                        }
+                    }
+                })
+            })
+    } ,[])
 
     function handleFriend(e){
-        e.preventDefault();
         fetch('http://localhost:3000/friends/pendingrequests')
             .then(requests => requests.json())
             .then(data => data.filter(friend => friend.user1 === loggedUser || friend.user2 === loggedUser))
@@ -31,6 +51,11 @@ export default function Usercard(props) {
                     }
                 )
             }).then(obj => obj.json()).then(data=> console.log(data)) : alert("Amicizia già inviata"))
+
+    }
+
+    function deleteFriend(e){
+
 
     }
 
@@ -71,7 +96,7 @@ export default function Usercard(props) {
             </div>
             <div>
                 <IconButton sx={{ marginLeft: 'auto' }}>
-                    <PersonAddAltIcon color="secondary" onClick={handleFriend} />
+                    {!isFriend ? <PersonAddAltIcon color="secondary" onClick={handleFriend}/> : <GroupIcon color="primary" onClick={deleteFriend}/>}
                 </IconButton>
             </div>
         </ListItem>

@@ -17,9 +17,14 @@ module.exports ={
             .catch(()=> res.sendStatus(500))
     },
 
-    acceptRequest:(req, res)=>{
-        Friend.updateOne({_id: req.body.idfriend}, { $set: { req2: true } })
+    retrieveOne:(req, res) => {
+        Friend.find({_id: req.body.idfriend})
             .then(obj => res.json(obj))
             .catch(()=> res.sendStatus(500))
+    },
+
+    acceptRequest:(req, res)=>{
+        Friend.updateOne({_id: req.body.idfriend}, {$set: { req2: true } })
+            .then(obj => res.json(obj))
     }
 }

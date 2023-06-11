@@ -21,8 +21,8 @@ export default function Homepage({loggedUser}){
 
     return(
         <Grid container spacing={2}>
-            <Grid xs={2}><Sidebar userarray={users} setDest={setReceiver}/> </Grid>
-            <Grid xs={10}><Home rec={receiver._id} rec-fn={receiver.fistname} rec-ln={receiver.lastname} username={receiver.username} usr={sessionID} /></Grid>
+            <Grid xs={3}><Sidebar userarray={users} setDest={setReceiver}/> </Grid>
+            <Grid xs={9}><Home rec={receiver._id} rec-fn={receiver.fistname} rec-ln={receiver.lastname} username={receiver.username} usr={sessionID} /></Grid>
         </Grid>
     )
 }

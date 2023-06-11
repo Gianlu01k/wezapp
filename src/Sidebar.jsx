@@ -24,7 +24,7 @@ const loggedUsername = Cookies.get('sessionUsername')
 
     const list = filteredUsers.map((el) =>
         <>
-            <Usercard user={el} key={el._id} setDest={props.setDest}/>
+            <Usercard user={el} key={el._id} id={el._id} setDest={props.setDest}/>
         </>
         )
     return(

@@ -18,7 +18,7 @@ export default function Notifications(){
         fetch('http://localhost:3000/friends/pendingrequests')
             .then(requests => requests.json())
             .then(data => setRequestPending(data.filter(friend => {
-                return (friend.user1 === loggedUser || friend.user2 === loggedUser) && (friend.req1 === false || friend.req2 === false);
+                return (friend.user2 === loggedUser) && (friend.req2 === false);
             })))
     },requestPending)
     const handleMenuOpen = (event) => {
@@ -30,29 +30,23 @@ export default function Notifications(){
     };
 
     const handleFriend=(e)=>{
-        console.log(e.target.dataset.value)
-        fetch('http://localhost:3000/friends/accept', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                    idfriend: e.target.dataset.value
-                }
-            )
-        }).then(obj => obj.json()).then(
-            data=> console.log(data))
-    };
+        if(e.target.dataset.value !== undefined){
+            fetch('http://localhost:3000/friends/accept', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                        idfriend: e.target.dataset.value,
 
-    function searchOne(iduser){
-        fetch('http://localhost:3000/one', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                    id: iduser
-                }
-            )
-        }).then(obj => obj.json()).then(
-            data=> data.username);
+                    }
+                )
+            }).then(obj => obj.json()).then(
+                data=> setRequestPending(requestPending))
+        }
+
     }
+
+    function searchOne(iduser){}
+
 
     return(
         <div>
@@ -66,10 +60,8 @@ export default function Notifications(){
             >
                 {requestPending.length!==0 ?  requestPending.map((el) => <div><MenuItem onClick={handleMenuClose}>
                     {userpending = el.user1 === loggedUser ?  el.user2 : el.user1}
-                     </MenuItem><Button><PersonAddAltIcon data-value={userpending} color="secondary"onClick={handleFriend} /></Button></div>) : ""}
+                     </MenuItem><Button><PersonAddAltIcon data-value={el._id} color="secondary"onClick={handleFriend} /></Button></div>) : ""}
 
             </Menu>
         </div>
-    )
-
-}
+    )}
