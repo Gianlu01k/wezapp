@@ -8,6 +8,8 @@ import {Link} from "react-router-dom";
 import {deepOrange} from "@mui/material/colors";
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterListOffIcon from '@mui/icons-material/FilterListOff';
 
 
 export default function Sidebar(props){
@@ -21,6 +23,24 @@ const loggedUsername = Cookies.get('sessionUsername')
     const filteredUsers=props.userarray.filter((el)=>
     el.username.toLowerCase().startsWith(searchUt.toLowerCase()))
 
+    function handleFilter(){
+        fetch('http://localhost:3000/friends/pendingrequests', {
+            method: 'get',
+            headers: {'Content-Type': 'application/json'},
+        }).then(data => data.json())
+            .then(requests => {
+               filteredUsers =  requests.filter((el) => {
+
+                    if ((el.user1 === props.id && el.user2 === loggedUser) || (el.user2 === props.id && el.user1 === loggedUser)) {
+
+                        if (el.req2 === true) {
+
+
+                        }
+                    }
+                })
+            })
+    }
 
     const list = filteredUsers.map((el) =>
         <>
@@ -55,6 +75,15 @@ const loggedUsername = Cookies.get('sessionUsername')
                             },
                         }}
                     />
+                    <IconButton
+                        sx={{
+                            mx:2,
+                          //  fontSize: '10rem', non si ingrandisce
+                        }}
+                    onClick={handleFilter}
+                    >
+                        <FilterListIcon />
+                    </IconButton>
                 </Box>
 
                 <List component="nav" aria-label="mailbox folders">
@@ -80,3 +109,4 @@ const loggedUsername = Cookies.get('sessionUsername')
 
     )
 }
+//

@@ -157,7 +157,10 @@ export default function Home(props) {
                     <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh',
                         '&::-webkit-scrollbar': {
                             display: 'none',
-                        },borderRadius: 5 }}>
+                        },borderTopLeftRadius: 0,
+                        borderTopRightRadius: 0,
+                        borderBottomLeftRadius: 25,
+                        borderBottomRightRadius: 25,}}>
 
                         <List>
                             {listMessages.map((m) => (
