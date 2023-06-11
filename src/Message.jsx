@@ -5,7 +5,8 @@ export default function Message(props) {
     const isSender = props.loggedUser === props.sender;
     const alignRight = isSender ? "flex-end" : "flex-start";
     const textAlign = isSender ? "right" : null;
-    const messageColor = isSender ? "#FFFFFF" : "#2c90ff";
+    const messageBGColor = isSender ? "#FFFFFF" : "#2c90ff";
+    const messageColor = isSender ? "#545353" : "#ffffff";
 
     return (
         <ListItem
@@ -19,7 +20,8 @@ export default function Message(props) {
         >
             <Box
                 sx={{
-                    backgroundColor: messageColor,
+                    backgroundColor: messageBGColor,
+                    color: messageColor,
                     borderRadius: 3,
                     p: 1,
                 }}

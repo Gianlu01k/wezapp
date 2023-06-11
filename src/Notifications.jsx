@@ -3,7 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import {Button} from "@mui/material";
+import {Badge, Button, Fab} from "@mui/material";
 import Cookies from "js-cookie";
 
 export default function Notifications(){
@@ -30,6 +30,7 @@ export default function Notifications(){
     };
 
     const handleFriend=(e)=>{
+
         if(e.target.dataset.value !== undefined){
             fetch('http://localhost:3000/friends/accept', {
                 method: 'post',
@@ -40,7 +41,7 @@ export default function Notifications(){
                     }
                 )
             }).then(obj => obj.json()).then(
-                data=> setRequestPending(requestPending))
+                data=> setRequestPending(requestPending)).then(()=> window.location.reload())
         }
 
     }
@@ -49,10 +50,17 @@ export default function Notifications(){
 
 
     return(
-        <div>
-            <Button onClick={handleMenuOpen}>
-                <NotificationsIcon />
-            </Button>
+        <div >
+            <Fab onClick={handleMenuOpen} variant="contained"
+                    sx={{
+                        height: '50px',
+                        width: '50px'
+                    }}>
+                <Badge color="secondary" badgeContent={requestPending.length}>
+                    <NotificationsIcon color={'primary'}/>
+                </Badge>
+
+            </Fab>
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -60,7 +68,7 @@ export default function Notifications(){
             >
                 {requestPending.length!==0 ?  requestPending.map((el) => <div><MenuItem onClick={handleMenuClose}>
                     {userpending = el.user1 === loggedUser ?  el.user2 : el.user1}
-                     </MenuItem><Button><PersonAddAltIcon data-value={el._id} color="secondary"onClick={handleFriend} /></Button></div>) : ""}
+                     </MenuItem><Button><PersonAddAltIcon data-value={el._id} color="secondary"onClick={handleFriend} /></Button></div>) : <MenuItem>Non ci sono richieste</MenuItem>}
 
             </Menu>
         </div>

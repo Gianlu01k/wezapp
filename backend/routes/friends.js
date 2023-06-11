@@ -11,5 +11,7 @@ router.post('/accept', friendsController.acceptRequest)
 
 router.post('/one', friendsController.retrieveOne)
 
+router.post('/delete', friendsController.deleteOne)
+
 
 module.exports = router

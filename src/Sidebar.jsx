@@ -16,11 +16,12 @@ export default function Sidebar(props){
 
 const [searchUt,setSearchUt]=useState("")
 const loggedUsername = Cookies.get('sessionUsername')
+const loggedUser = Cookies.get('sessionUsername')
     const handleSearch=(e) => {
     setSearchUt(e.target.value)
     }
 
-    const filteredUsers=props.userarray.filter((el)=>
+    let filteredUsers=props.userarray.filter((el)=>
     el.username.toLowerCase().startsWith(searchUt.toLowerCase()))
 
     function handleFilter(){
@@ -44,14 +45,14 @@ const loggedUsername = Cookies.get('sessionUsername')
 
     const list = filteredUsers.map((el) =>
         <>
-            <Usercard user={el} key={el._id} id={el._id} setDest={props.setDest}/>
+        {el.username !== loggedUsername ? < Usercard user={el} key={el._id} id={el._id} setDest={props.setDest}/>: ""}
         </>
         )
     return(
         <>
             <Container sx={{ marginLeft: '3rem', width: '90%', }}>
-                <Box sx={{ mx: 4, display: 'flex', alignItems: 'center', }}>
-                    <h1 sx={{ flexGrow: 1 }}>Chats</h1>
+                <Box sx={{ mx: 3, display: 'flex', alignItems: 'center', }}>
+                    <h1 sx={{ flexGrow: 1 }}>Wezapp</h1>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar

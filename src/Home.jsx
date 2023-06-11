@@ -124,11 +124,15 @@ export default function Home(props) {
 
             <Container maxWidth="lg">
                 <Box sx={{
-                    bgcolor: '#adaba8',
+                    bgcolor: '#c5c3c5',
                     p: 1,
-                    display: 'flex',
+                    display: props.rec === "" ? "none" : "flex",
                     alignItems: "center",
-                    my: 2,
+                    marginTop: 5 ,
+                    borderTopLeftRadius: 25,
+                    borderTopRightRadius: 25,
+                    borderBottomLeftRadius: 0,
+                    borderBottomRightRadius: 0,
                 }}>
                     <Avatar
                         sx={{
@@ -175,7 +179,7 @@ export default function Home(props) {
                     </ScrollableBox>
                 ) : (
                     <>
-                        <Container maxWidth="lg">
+                        <Container maxWidth="lg" >
                             <Box sx={{
                                 p: 1,
                                 display: 'flex',
@@ -207,6 +211,7 @@ export default function Home(props) {
                                     '& .MuiOutlinedInput-root': {
                                         borderRadius: 10,
                                         height:'50px',
+
                                     },
                                 }}
                             />

@@ -26,5 +26,9 @@ module.exports ={
     acceptRequest:(req, res)=>{
         Friend.updateOne({_id: req.body.idfriend}, {$set: { req2: true } })
             .then(obj => res.json(obj))
-    }
+    },
+
+    deleteOne:(req, res)=>{
+        Friend.deleteOne({_id: req.body.idfriend})
+            .then(obj => res.json(obj))}
 }

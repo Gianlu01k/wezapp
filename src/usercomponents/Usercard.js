@@ -4,20 +4,25 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import Cookies from "js-cookie";
 import IconButton from '@mui/material/IconButton';
 import GroupIcon from '@mui/icons-material/Group';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 export default function Usercard(props) {
 
 
     const loggedUser = Cookies.get('sessionID')
-    const [isFriend, setIsFriend] = useState(false)
+    const [isFriend, setIsFriend] = useState(0)
 
     function handleClick(e) {
-       if(isFriend) {
+       if(isFriend===2) {
             props.setDest(props.user)
         }else{
+           if(isFriend ===0)
            alert("Non siete ancora amici. Invia una richiesta prima di chattare")
+           else
+               alert("Richiesta già inviata, ma non ancora accettata")
        }
     }
+
     useEffect(()=> {
         fetch('http://localhost:3000/friends/pendingrequests', {
             method: 'get',
@@ -29,13 +34,13 @@ export default function Usercard(props) {
                     if ((el.user1 === props.id && el.user2 === loggedUser) || (el.user2 === props.id && el.user1 === loggedUser)) {
 
                         if (el.req2 === true) {
-                            setIsFriend(true)
+                            setIsFriend(2)
 
                         }
                     }
                 })
             })
-    } ,[])
+    } ,isFriend)
 
     function handleFriend(e){
         fetch('http://localhost:3000/friends/pendingrequests')
@@ -50,13 +55,26 @@ export default function Usercard(props) {
                         user2: props.user._id
                     }
                 )
-            }).then(obj => obj.json()).then(data=> console.log(data)) : alert("Amicizia già inviata"))
+            }).then(obj => obj.json()).then(data=> setIsFriend(1)) : alert("Amicizia già inviata"))
 
     }
 
     function deleteFriend(e){
-
-
+        const areSure = window.confirm("Sei sicuro di rimuovere questa amicizia? \n Non potrai più interagire con lui/lei")
+        if(areSure) {
+            fetch('http://localhost:3000/friends/pendingrequests')
+                .then(requests => requests.json())
+                .then(data => data.filter(friend => friend.user1 === loggedUser || friend.user2 === loggedUser))
+                .then(myfriends => myfriends.filter(friend => friend.user1 === props.user._id || friend.user2 === props.user._id))
+                .then(exfriend => exfriend.length === 1 ? fetch('http://localhost:3000/friends/delete', {
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                            idfriend: exfriend[0]._id
+                        }
+                    )
+                }).then(obj => obj.json()).then(data => setIsFriend(0)) : alert("Errore rimozione"))
+        }
     }
 
 
@@ -72,7 +90,7 @@ export default function Usercard(props) {
             }}
         >
             <div sx={{ flexGrow: 1 }}>
-                <Button onClick={handleClick}>
+                <Button onClick={handleClick} >
                     <Avatar
                         sx={{
                             bgcolor: 'rgba(255, 165, 0, 0.2)',
@@ -96,7 +114,7 @@ export default function Usercard(props) {
             </div>
             <div>
                 <IconButton sx={{ marginLeft: 'auto' }}>
-                    {!isFriend ? <PersonAddAltIcon color="secondary" onClick={handleFriend}/> : <GroupIcon color="primary" onClick={deleteFriend}/>}
+                    {isFriend===0 ? <PersonAddAltIcon color="secondary" onClick={handleFriend}/> : isFriend === 2 ? <GroupIcon color="primary" onClick={deleteFriend}/> : <PersonSearchIcon color="success" onClick={()=>{alert("Richiesta già inviata")}}/>}
                 </IconButton>
             </div>
         </ListItem>
