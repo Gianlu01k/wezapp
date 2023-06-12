@@ -16,13 +16,14 @@ export default function Sidebar(props){
 
 const [searchUt,setSearchUt]=useState("")
 const loggedUsername = Cookies.get('sessionUsername')
-const loggedUser = Cookies.get('sessionUsername')
+const loggedUser = Cookies.get('sessionID')
+const [isFilter, setIsFilter] = useState(false)
     const handleSearch=(e) => {
     setSearchUt(e.target.value)
     }
 
-    let filteredUsers=props.userarray.filter((el)=>
-    el.username.toLowerCase().startsWith(searchUt.toLowerCase()))
+
+    let filteredFriends = []
 
     function handleFilter(){
         fetch('http://localhost:3000/friends/pendingrequests', {
@@ -30,23 +31,35 @@ const loggedUser = Cookies.get('sessionUsername')
             headers: {'Content-Type': 'application/json'},
         }).then(data => data.json())
             .then(requests => {
-               filteredUsers =  requests.filter((el) => {
+               return requests.filter(el => el.req2 === true)
+            }).then(accepted => {
 
-                    if ((el.user1 === props.id && el.user2 === loggedUser) || (el.user2 === props.id && el.user1 === loggedUser)) {
-
-                        if (el.req2 === true) {
-
-
-                        }
-                    }
+             let array = accepted.filter(el => el.user1 === loggedUser || el.user2 === loggedUser)
+            props.userarray.forEach(el => {
+                console.log(el)
+                array.forEach(r => {
+                    console.log(r.user1 + " "+ r.user2 + " "+ el._id)
+                    if(r.user1 === el._id || r.user2 === el._id)
+                    {filteredFriends.push(el)}
                 })
             })
+            setIsFilter(!isFilter)
+        })
     }
 
-    const list = filteredUsers.map((el) =>
-        <>
-        {el.username !== loggedUsername ? < Usercard user={el} key={el._id} id={el._id} setDest={props.setDest}/>: ""}
-        </>
+    let filteredUsers;
+    if (isFilter) {
+        filteredUsers = filteredFriends.filter((el)=>
+            el.username.toLowerCase().startsWith(searchUt.toLowerCase()));
+    } else {
+        filteredUsers = props.userarray.filter((el)=>
+            el.username.toLowerCase().startsWith(searchUt.toLowerCase()));
+    }
+        let list = filteredUsers.map((el) =>
+            <>
+                {el.username !== loggedUsername ?
+                    < Usercard user={el} key={el._id} id={el._id} setDest={props.setDest}/> : ""}
+            </>
         )
     return(
         <>
@@ -79,7 +92,6 @@ const loggedUser = Cookies.get('sessionUsername')
                     <IconButton
                         sx={{
                             mx:2,
-                          //  fontSize: '10rem', non si ingrandisce
                         }}
                     onClick={handleFilter}
                     >
