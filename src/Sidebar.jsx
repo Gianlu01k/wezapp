@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterListOffIcon from '@mui/icons-material/FilterListOff';
+import { Tooltip } from '@mui/material';
 
 
 export default function Sidebar(props){
@@ -18,49 +19,51 @@ const [searchUt,setSearchUt]=useState("")
 const loggedUsername = Cookies.get('sessionUsername')
 const loggedUser = Cookies.get('sessionID')
 const [isFilter, setIsFilter] = useState(false)
+    const [filteredFriends, setFilteredFriends] = useState([]);
     const handleSearch=(e) => {
     setSearchUt(e.target.value)
     }
 
-
-    let filteredFriends = []
-
-    function handleFilter(){
+    function handleFilter() {
         fetch('http://localhost:3000/friends/pendingrequests', {
             method: 'get',
             headers: {'Content-Type': 'application/json'},
-        }).then(data => data.json())
-            .then(requests => {
-               return requests.filter(el => el.req2 === true)
-            }).then(accepted => {
-
-             let array = accepted.filter(el => el.user1 === loggedUser || el.user2 === loggedUser)
-            props.userarray.forEach(el => {
-                console.log(el)
-                array.forEach(r => {
-                    console.log(r.user1 + " "+ r.user2 + " "+ el._id)
-                    if(r.user1 === el._id || r.user2 === el._id)
-                    {filteredFriends.push(el)}
-                })
-            })
-            setIsFilter(!isFilter)
         })
+            .then(data => data.json())
+            .then(requests => {
+                return requests.filter(el => el.req2 === true);
+            })
+            .then(accepted => {
+                let array = accepted.filter(el => el.user1 === loggedUser || el.user2 === loggedUser);
+                const filteredFriendsArray = [];
+                props.userarray.forEach(el => {
+                    array.forEach(r => {
+                        if (r.user1 === el._id || r.user2 === el._id) {
+                            filteredFriendsArray.push(el);
+                        }
+                    });
+                });
+                setFilteredFriends(filteredFriendsArray);
+                setIsFilter(!isFilter);
+            });
     }
 
     let filteredUsers;
     if (isFilter) {
-        filteredUsers = filteredFriends.filter((el)=>
-            el.username.toLowerCase().startsWith(searchUt.toLowerCase()));
+        filteredUsers = filteredFriends.filter(el =>
+            el.username.toLowerCase().startsWith(searchUt.toLowerCase())
+        );
     } else {
-        filteredUsers = props.userarray.filter((el)=>
-            el.username.toLowerCase().startsWith(searchUt.toLowerCase()));
+        filteredUsers = props.userarray.filter(el =>
+            el.username.toLowerCase().startsWith(searchUt.toLowerCase())
+        );
     }
-        let list = filteredUsers.map((el) =>
-            <>
-                {el.username !== loggedUsername ?
-                    < Usercard user={el} key={el._id} id={el._id} setDest={props.setDest}/> : ""}
-            </>
-        )
+
+    let list = filteredUsers.map(el =>
+        <>
+            {el.username !== loggedUsername ? <Usercard user={el} key={el._id} id={el._id} setDest={props.setDest} /> : ""}
+        </>
+    );
     return(
         <>
             <Container sx={{ marginLeft: '3rem', width: '90%', }}>
@@ -89,7 +92,9 @@ const [isFilter, setIsFilter] = useState(false)
                             },
                         }}
                     />
-                    <IconButton
+                    {!isFilter ?
+                        <Tooltip title="Amici">
+                            <IconButton
                         sx={{
                             mx:2,
                         }}
@@ -97,6 +102,15 @@ const [isFilter, setIsFilter] = useState(false)
                     >
                         <FilterListIcon />
                     </IconButton>
+                        </Tooltip>
+                        :<IconButton
+                        sx={{
+                        mx:2,
+                    }}
+                        onClick={handleFilter}
+                >
+                    <FilterListOffIcon />
+                </IconButton> }
                 </Box>
 
                 <List component="nav" aria-label="mailbox folders">
