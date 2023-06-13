@@ -3,8 +3,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import {Badge, Button, Fab} from "@mui/material";
+import {Badge, Button, Fab, ListItemText, MenuList} from "@mui/material";
 import Cookies from "js-cookie";
+import ItemUsername from "./ItemUsername";
 
 export default function Notifications(){
 
@@ -12,6 +13,7 @@ export default function Notifications(){
     const [requestPending, setRequestPending] = useState([])
     let userpending = "";
     const loggedUser = Cookies.get('sessionID')
+    const [username, setUsername] =useState("")
 
 
     useEffect(() => {
@@ -46,8 +48,6 @@ export default function Notifications(){
 
     }
 
-    function searchOne(iduser){}
-
 
     return(
         <div >
@@ -66,9 +66,12 @@ export default function Notifications(){
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
             >
-                {requestPending.length!==0 ?  requestPending.map((el) => <div><MenuItem onClick={handleMenuClose}>
-                    {userpending = el.user1 === loggedUser ?  el.user2 : el.user1}
-                     </MenuItem><Button><PersonAddAltIcon data-value={el._id} color="secondary"onClick={handleFriend} /></Button></div>) : <MenuItem>Non ci sono richieste</MenuItem>}
+                {requestPending.length!==0 ?  requestPending.map((el) =>
+                    <div><MenuItem onClick={handleMenuClose}>
+                        <ItemUsername userid={el.user1 === loggedUser ? }/>
+                    </MenuItem><Button><PersonAddAltIcon data-value={el._id} color="secondary" onClick={handleFriend}/></Button>
+                    </div>
+                ) : <MenuItem>Non ci sono richieste</MenuItem>}
 
             </Menu>
         </div>
