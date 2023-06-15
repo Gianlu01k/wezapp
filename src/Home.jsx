@@ -126,7 +126,7 @@ export default function Home(props) {
                 <Box sx={{
                     bgcolor: '#c5c3c5',
                     p: 1,
-                    display: props.rec === "" ? "none" : "flex",
+                    display: "flex",
                     alignItems: "center",
                     marginTop: 5 ,
                     borderTopLeftRadius: 25,
@@ -150,14 +150,12 @@ export default function Home(props) {
                         {props.username}
                     </Typography>
 
-                    {selectedChat ? (
-                        <Box sx={{ marginLeft: 'auto' }}>
-                            <Notifications />
-                        </Box>
-                    ) : null}
+                    <Box sx={{ marginLeft: 'auto' }}>
+                        <Notifications />
+                    </Box>
                 </Box>
 
-                {selectedChat ? (
+
                     <ScrollableBox ref={scrollableBoxRef} sx={{ bgcolor: '#e7e5e8', height: '80vh',
                         '&::-webkit-scrollbar': {
                             display: 'none',
@@ -165,7 +163,7 @@ export default function Home(props) {
                         borderTopRightRadius: 0,
                         borderBottomLeftRadius: 25,
                         borderBottomRightRadius: 25,}}>
-
+                        {selectedChat ? (
                         <List>
                             {listMessages.map((m) => (
                                 <Message
@@ -175,29 +173,12 @@ export default function Home(props) {
                                     loggedUser={loggedUser}
                                 />
                             ))}
-                        </List>
+                        </List>) : ""}
                     </ScrollableBox>
-                ) : (
-                    <>
-                        <Container maxWidth="lg" >
-                            <Box sx={{
-                                p: 1,
-                                display: 'flex',
-                                alignItems: "center",
-                                my: 2
-                            }}>
-                                <Typography variant="h5">Logo</Typography>
-                                <Box sx={{ marginLeft: 'auto' }}>
-                                    <Notifications />
-                                </Box>
-                            </Box>
-                        </Container>
-                    </>
-                )}
 
 
-                {selectedChat && (
-                    <Grid container sx={{ marginTop: 1 }}>
+
+                <Grid container sx={{ marginTop: 1 }}>
                         <Grid item sx={{ flexGrow: 1 }}>
                             <TextField
                                 fullWidth
@@ -229,7 +210,7 @@ export default function Home(props) {
                             </Fab>
                         </Grid>
                     </Grid>
-                )}
+
             </Container>
         </>
     );

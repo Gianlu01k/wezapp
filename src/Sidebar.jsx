@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Usercard from "./usercomponents/Usercard";
-import {Box, Button, Container, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, DialogTitle, TextField, Typography} from "@mui/material";
 import {Avatar, List} from "@mui/material";
 import Cookies from 'js-cookie';
 import {Link} from "react-router-dom";
@@ -10,6 +10,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterListOffIcon from '@mui/icons-material/FilterListOff';
 import { Tooltip } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
 
 
 export default function Sidebar(props){
@@ -63,6 +64,12 @@ const [isFilter, setIsFilter] = useState(false)
             {el.username !== loggedUsername ? <Usercard user={el} key={el._id} id={el._id} setDest={props.setDest} /> : ""}
         </>
     );
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    function handleProfile(){
+        setIsOpen(!isOpen)
+    }
     return(
         <>
             <Container sx={{ marginLeft: '3rem', width: '90%', }}>
@@ -70,11 +77,19 @@ const [isFilter, setIsFilter] = useState(false)
                     <h1 sx={{ flexGrow: 1 }}>Wezapp</h1>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
+
                     <Avatar
                         sx={{ bgcolor: deepOrange[500], marginRight: '1rem', mx: 3, my: 1 }}
-                        alt={loggedUsername}
+                        alt={loggedUsername} onClick={handleProfile}
                     >
                         {loggedUsername.charAt(0).toUpperCase()}
+                        <Dialog open={isOpen} onClose={handleProfile}>
+                            <DialogTitle>{loggedUsername}</DialogTitle>
+                            <Avatar
+                                sx={{ bgcolor: deepOrange[500], marginRight: '1rem', mx: 3, my: 1 }}
+                                alt={loggedUsername}> {loggedUsername.charAt(0).toUpperCase()} </Avatar>
+
+                        </Dialog>
                     </Avatar>
                     <TextField
                         label="Cerca"
