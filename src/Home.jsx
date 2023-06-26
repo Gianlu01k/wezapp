@@ -6,6 +6,7 @@ import { styled } from "@mui/system";
 import {deepOrange} from "@mui/material/colors";
 import Cookies from "js-cookie";
 import Notifications from "./Notifications";
+import {Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 
 
 const ScrollableBox = styled(Box)`
@@ -119,8 +120,19 @@ export default function Home(props) {
 
     }
 
+        const [open, setOpen] = useState(false);
 
-    return (
+        const handleClickk = () => {
+            setOpen(true);
+        };
+
+        const handleClose = () => {
+            setOpen(false);
+        };
+
+
+
+        return (
         <>
 
             <Container maxWidth="lg">
@@ -142,11 +154,23 @@ export default function Home(props) {
                             height: "2rem",
                             width: "2rem",
                             marginRight: "1rem",
+                            cursor: "pointer", // Aggiungi la proprietà per mostrare il puntatore quando l'avatar è cliccabile
                         }}
                         alt={props.username}
+                        onClick={handleClickk} // Aggiungi l'handler per gestire il clic sull'avatar
                     >
                         {props.username.charAt(0).toUpperCase()}
                     </Avatar>
+
+                    <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle>{props.username}</DialogTitle>
+                        <DialogContent>
+                            {props.rec_fn +" " +props.rec_ln}
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose}>Chiudi</Button>
+                        </DialogActions>
+                    </Dialog>
                     <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                         {props.username}
                     </Typography>
