@@ -86,6 +86,7 @@ export default function Home(props) {
                                 chat: selectedChat[0]._id,
                             }),
                         }).then(() => setMessage(""));
+                        setMessagePending(!messagePending);
                     }
                 }else{
                     fetch("http://localhost:3000/chat/newchat",{
@@ -105,11 +106,11 @@ export default function Home(props) {
                                     content: message,
                                     chat: idnewchat,
                                 }),
-                            })
-                        }
+                            });
+                            setMessagePending(!messagePending);
+}
                     )
                 }
-                setMessagePending(!messagePending);
                 setMessage("")
             });
     }

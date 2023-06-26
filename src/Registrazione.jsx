@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import bcrypt from 'bcryptjs'
 
 const defaultTheme = createTheme();
 export default function Registrazione(){
@@ -17,6 +18,7 @@ export default function Registrazione(){
     const [form, setForm] = useState({username:"", password:"", firstname:"", lastname:""})
     const [error,setError]=useState(false)
     const navigate = useNavigate();
+    const salt = bcrypt.genSaltSync(10)
 
     function handleChange(e){
         setForm({...form, [e.target.name]: e.target.value})
@@ -29,6 +31,8 @@ export default function Registrazione(){
             setError(true)
         else{
             setError(false)
+            const hashedPassword = bcrypt.hashSync(form.password, '$2a$10$CwTycUXWue0Thq9StjUM0u')
+            setForm({...form, password: hashedPassword})
             fetch('http://localhost:3000/registration',
                 {
                     method: 'post',
