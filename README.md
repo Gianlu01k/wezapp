@@ -1,6 +1,6 @@
-Ending Web Fundamental Univeristy course project
+Final Web Fundamental University course project
 
-Scope: (Real Time) web app chat
+Scope: private messaging web app
 
 Team: Gianluigi Palmisano, Nicolas Putignano
 
