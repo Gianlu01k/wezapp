@@ -154,10 +154,10 @@ export default function Home(props) {
                             height: "2rem",
                             width: "2rem",
                             marginRight: "1rem",
-                            cursor: "pointer", // Aggiungi la proprietà per mostrare il puntatore quando l'avatar è cliccabile
+                            cursor: "pointer",
                         }}
                         alt={props.username}
-                        onClick={handleClickk} // Aggiungi l'handler per gestire il clic sull'avatar
+                        onClick={handleClickk}
                     >
                         {props.username.charAt(0).toUpperCase()}
                     </Avatar>
@@ -167,9 +167,6 @@ export default function Home(props) {
                         <DialogContent>
                             {props.rec_fn +" " +props.rec_ln}
                         </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose}>Chiudi</Button>
-                        </DialogActions>
                     </Dialog>
                     <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                         {props.username}

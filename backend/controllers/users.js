@@ -1,11 +1,23 @@
 const User = require('../models/users')
+const express = require("express");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
     checkUser:(req, res)=>{
-       User.findOne({username: req.body.username, password:req.body.password})
-            .then(obj => {
-                if(obj !== null)
-                    res.send({user: obj,verified: true})
+       User.findOne({username: req.body.username})
+            .then(async obj => {
+
+                if (obj !== null && await bcrypt.compare( req.body.password, obj.password)){
+                const payload = {
+                        userId: obj._id,
+                        username: obj.username
+                    };
+                const secretKey = 'wezappsk2023';
+                const expiresIn = '2h';
+                const token = jwt.sign(payload, secretKey, { expiresIn });
+                obj.token = token;
+                    res.send({user: obj, verified: true})}
                 else
                     res.send({verified: false})
             })
@@ -14,23 +26,33 @@ module.exports = {
 
     addUser: (req, res) => {
         User.findOne({ username: req.body.username })
-            .then(obj => {
+            .then(async obj => {
                 if (obj === null) {
+                    let encryptedPassword = await bcrypt.hash(req.body.password, 10);
                     User.create({
                         firstname: req.body.firstname,
                         lastname: req.body.lastname,
                         username: req.body.username,
-                        password: req.body.password
+                        password: encryptedPassword
                     })
                         .then(r => {
-                            res.json({r, verified:true});
+
+                            const payload = {
+                                userId: r._id,
+                                username: r.username
+                            };
+                            const secretKey = 'wezappsk2023';
+                            const expiresIn = '2h';
+                            const token = jwt.sign(payload, secretKey, { expiresIn });
+                            r.token = token;
+                            res.json({r, verified: true});
                         })
                         .catch(err => {
                             console.log("Errore nella creazione dell'utente", err);
                             res.sendStatus(500);
                         });
                 } else {
-                    res.send({ verified: false });
+                    res.send({verified: false});
                 }
             })
             .catch(err => {

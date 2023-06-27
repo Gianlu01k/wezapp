@@ -8,7 +8,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Cookies from 'js-cookie';
-import bcrypt from "bcryptjs";
 
 const defaultTheme = createTheme();
 export default function Login({func}) {
@@ -36,8 +35,6 @@ export default function Login({func}) {
             .then(obj => obj.json())
             .then(u => {
                 if (u.verified) {
-                    const hashedPassword = bcrypt.hashSync(testo.password, '$2a$10$CwTycUXWue0Thq9StjUM0u')
-                    if(hashedPassword === u.user.password){console.log(hashedPassword)}
                     setUser(u.user);
                     func(u.user);
                     Cookies.set('sessionID', u.user._id);

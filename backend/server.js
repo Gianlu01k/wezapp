@@ -21,6 +21,12 @@ app.use(express.static("static"))
 
 app.use('/', router)
 
+const decodeTokenMiddleware = require("./routes/middleauth");
+app.get('http://localhost:3001/homepage', decodeTokenMiddleware, (req, res) => {
+    res.status(200);
+});
+
+
 app.listen(3000, () => {
     console.log("App in ascolto")
 })
