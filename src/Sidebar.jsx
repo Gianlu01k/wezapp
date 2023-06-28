@@ -16,8 +16,9 @@ import Dialog from '@mui/material/Dialog';
 export default function Sidebar(props){
 
 const [searchUt,setSearchUt]=useState("")
-const loggedUsername = Cookies.get('sessionUsername')
-const loggedUser = Cookies.get('sessionID')
+const loggedUsername = localStorage.getItem('sessionUsername')
+const loggedUser = localStorage.getItem('sessionID')
+const token = localStorage.getItem('token')
 const [isFilter, setIsFilter] = useState(false)
     const [filteredFriends, setFilteredFriends] = useState([]);
     const handleSearch=(e) => {
@@ -139,7 +140,7 @@ const [isFilter, setIsFilter] = useState(false)
                         fontSize: '1rem',
                     }}
                     onClick={() => {
-                        Cookies.remove('sessionID');
+                        localStorage.clear();
                     }}
                 >
                     <LogoutIcon />

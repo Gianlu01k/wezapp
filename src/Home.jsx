@@ -20,7 +20,8 @@ export default function Home(props) {
     const [messagePending, setMessagePending] = useState(false);
     let [selectedChat, setSelectedChat] = useState(null);
     const scrollableBoxRef = useRef({ behavior: 'smooth', block: 'end' });
-    const loggedUser = Cookies.get('sessionID')
+    const loggedUser = localStorage.getItem('sessionID');
+    const token = localStorage.getItem('token')
     function handleChange(e) {
         setMessage(e.target.value);
     }

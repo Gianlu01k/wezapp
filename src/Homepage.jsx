@@ -5,7 +5,8 @@ import './sidehome.css'
 import {Box, CssBaseline, Grid} from "@mui/material";
 import Cookies from 'js-cookie';
 
-const sessionID = Cookies.get('sessionID');
+const sessionID = localStorage.getItem('sessionID');
+const token = localStorage.getItem('token')
 
 export default function Homepage({loggedUser}){
 
@@ -13,8 +14,13 @@ export default function Homepage({loggedUser}){
     const [receiver, setReceiver] = useState({_id:"", firstname:"", lastname:"", username:"", password:""})
 
 
+
     useEffect(()=>{
-        fetch('http://localhost:3000/all')
+        fetch('http://localhost:3000/all',{
+            headers: {
+                "Authorization": token,
+            },
+        })
             .then(obj => obj.json())
             .then(data => setUsers(data))
     },[])

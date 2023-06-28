@@ -4,14 +4,14 @@ const chatController = require('../controllers/chats')
 const friendsRouter = require('./friends')
 
 const router = express.Router()
-
+const middleauth = require('./middleauth')
 router.post('/login',
     usersController.checkUser
 )
 
 router.post('/registration', usersController.addUser)
 
-router.get('/all', usersController.retrieveAll)
+router.get('/all',middleauth, usersController.retrieveAll)
 
 router.post('/one',middleauth, usersController.retrieveOne)
 

@@ -13,7 +13,8 @@ export default function Notifications(){
     const [anchorEl, setAnchorEl] = useState(null);
     const [requestPending, setRequestPending] = useState([])
     let userpending = "";
-    const loggedUser = Cookies.get('sessionID')
+    const loggedUser = localStorage.getItem('sessionID');
+    const token = localStorage.getItem('token')
 
 
 

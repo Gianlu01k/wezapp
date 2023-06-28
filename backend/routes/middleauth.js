@@ -4,10 +4,11 @@ const secretKey = 'wezappsk2023';
 const decodeTokenMiddleware = (req, res, next) => {
 
     const token = req.headers.authorization;
+    console.log("weee " + token)
 
     if (token) {
-
-        jwt.verify(token, secretKey, (err, decoded) => {
+        const secretKey = 'wezappsk2023';
+        jwt.verify(token,  secretKey, (err, decoded) => {
             if (err) {
 
                 console.log('Errore nella verifica del token:', err.message);

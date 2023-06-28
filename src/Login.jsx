@@ -7,7 +7,6 @@ import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Cookies from 'js-cookie';
 
 const defaultTheme = createTheme();
 export default function Login({func}) {
@@ -37,8 +36,9 @@ export default function Login({func}) {
                 if (u.verified) {
                     setUser(u.user);
                     func(u.user);
-                    Cookies.set('sessionID', u.user._id);
-                    Cookies.set('sessionUsername', u.user.username);
+                    localStorage.setItem('sessionID', u.user._id);
+                    localStorage.setItem('sessionUsername', u.user.username);
+                    localStorage.setItem('token', u.token);
                 } else {
                     setError(true);
                 }

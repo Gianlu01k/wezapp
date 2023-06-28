@@ -9,7 +9,8 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 export default function Usercard(props) {
 
 
-    const loggedUser = Cookies.get('sessionID')
+    const loggedUser = localStorage.getItem('sessionID');
+    const token = localStorage.getItem('token')
     const [isFriend, setIsFriend] = useState(0)
 
     function handleClick(e) {
