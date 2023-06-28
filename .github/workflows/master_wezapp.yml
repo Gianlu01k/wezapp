@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch: backend
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: ./backend
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'Wezapp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F40515507EB54E908AB34D7566A4BFB5 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0BA1B389DDB540CB897DD9134EDF7AC7 }}
           package: .
