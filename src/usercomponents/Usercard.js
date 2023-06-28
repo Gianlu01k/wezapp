@@ -26,7 +26,9 @@ export default function Usercard(props) {
     useEffect(()=> {
         fetch('http://localhost:3000/friends/pendingrequests', {
             method: 'get',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json',
+                "Authorization": token,
+            },
         }).then(data => data.json())
             .then(requests => {
                 requests.forEach((el) => {
@@ -49,7 +51,10 @@ export default function Usercard(props) {
             .then(myfriends => myfriends.filter(friend => friend.user1 === props.user._id || friend.user2 === props.user._id))
             .then(exfriend => exfriend.length === 0 ?  fetch('http://localhost:3000/friends', {
                 method: 'post',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": token,
+                },
                 body: JSON.stringify({
                         user1: loggedUser,
                         user2: props.user._id
@@ -68,7 +73,7 @@ export default function Usercard(props) {
                 .then(myfriends => myfriends.filter(friend => friend.user1 === props.user._id || friend.user2 === props.user._id))
                 .then(exfriend => exfriend.length === 1 ? fetch('http://localhost:3000/friends/delete', {
                     method: 'post',
-                    headers: {'Content-Type': 'application/json'},
+                    headers: {'Content-Type': 'application/json',"Authorization": token,},
                     body: JSON.stringify({
                             idfriend: exfriend[0]._id
                         }

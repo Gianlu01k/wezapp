@@ -7,6 +7,7 @@ import {Badge, Button, Fab, List, ListItem, ListItemText, MenuList} from "@mui/m
 import Cookies from "js-cookie";
 import ItemUsername from "./ItemUsername";
 
+const token = localStorage.getItem('token')
 export default function Notifications(){
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -17,7 +18,11 @@ export default function Notifications(){
 
 
     useEffect(() => {
-        fetch('http://localhost:3000/friends/pendingrequests')
+        fetch('http://localhost:3000/friends/pendingrequests',{
+            headers: {
+                "Authorization": token,
+            },
+        })
             .then(requests => requests.json())
             .then(data => setRequestPending(data.filter(friend => {
                 return (friend.user2 === loggedUser) && (friend.req2 === false);
@@ -36,7 +41,9 @@ export default function Notifications(){
         if(e.target.dataset.value !== undefined){
             fetch('http://localhost:3000/friends/accept', {
                 method: 'post',
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json',
+                    "Authorization": token,
+                },
                 body: JSON.stringify({
                         idfriend: e.target.dataset.value,
 

@@ -13,16 +13,16 @@ router.post('/registration', usersController.addUser)
 
 router.get('/all', usersController.retrieveAll)
 
-router.post('/one', usersController.retrieveOne)
+router.post('/one',middleauth, usersController.retrieveOne)
 
-router.post('/chat', chatController.retrieveChats)
+router.post('/chat',middleauth, chatController.retrieveChats)
 
-router.get('/chat/messages', chatController.retrieveMessages)
+router.get('/chat/messages',middleauth, chatController.retrieveMessages)
 
-router.post('/chat/newmessage', chatController.addMessage)
+router.post('/chat/newmessage',middleauth, chatController.addMessage)
 
-router.post('/chat/newchat', chatController.addChat)
+router.post('/chat/newchat',middleauth, chatController.addChat)
 
-router.use('/friends', friendsRouter)
+router.use('/friends',middleauth, friendsRouter)
 
 module.exports = router

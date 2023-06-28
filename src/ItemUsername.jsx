@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {ListItemText} from "@mui/material";
 
+const sessionID = localStorage.getItem('sessionID');
+const token = localStorage.getItem('token')
 
 export default function ItemUsername(props){
 
@@ -9,7 +11,9 @@ export default function ItemUsername(props){
     useEffect(()=> {
         fetch('http://localhost:3000/one', {
             method: 'post',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json',
+                "Authorization": token,
+            },
             body: JSON.stringify({
                     id: props.userid
                 }

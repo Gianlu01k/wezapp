@@ -27,7 +27,7 @@ const [isFilter, setIsFilter] = useState(false)
     function handleFilter() {
         fetch('http://localhost:3000/friends/pendingrequests', {
             method: 'get',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json',"Authorization": token,},
         })
             .then(data => data.json())
             .then(requests => {

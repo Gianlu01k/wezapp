@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 import Notifications from "./Notifications";
 import {Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
 
+const token = Cookies.get('token')
 
 const ScrollableBox = styled(Box)`
   overflow-y: scroll;
@@ -32,7 +33,9 @@ export default function Home(props) {
     useEffect(() => {
         fetch("http://localhost:3000/chat", {
             method: "post",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json",
+                "Authorization": token,
+            },
             body: JSON.stringify({}),
         })
             .then((data) => data.json())
@@ -45,7 +48,11 @@ export default function Home(props) {
 
                 setListMessages([]);
                 if (selectedChat.length !== 0) {
-                    fetch(`http://localhost:3000/chat/messages`)
+                    fetch(`http://localhost:3000/chat/messages`,{
+                        headers: {
+                            "Authorization": token,
+                        },
+                    })
                         .then((data) => data.json())
                         .then((messages) => {
                             const mess = messages.filter(
@@ -64,7 +71,7 @@ export default function Home(props) {
         let selectedChat = [];
         fetch("http://localhost:3000/chat", {
             method: "post",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json","Authorization": token, },
             body: JSON.stringify({}),
         })
             .then((data) => data.json())
@@ -80,7 +87,10 @@ export default function Home(props) {
                     if (message !== "") {
                         fetch("http://localhost:3000/chat/newmessage", {
                             method: "post",
-                            headers: { "Content-Type": "application/json" },
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": token,
+                            },
                             body: JSON.stringify({
                                 mittente: loggedUser,
                                 content: message,
@@ -92,7 +102,9 @@ export default function Home(props) {
                 }else{
                     fetch("http://localhost:3000/chat/newchat",{
                         method: "post",
-                        headers: { "Content-Type": "application/json" },
+                        headers: { "Content-Type": "application/json",
+                            "Authorization": token,
+                        },
                         body: JSON.stringify({
                             users: [loggedUser, props.rec]
                         }),
@@ -101,7 +113,9 @@ export default function Home(props) {
                             const idnewchat = chat._id;
                             fetch("http://localhost:3000/chat/newmessage", {
                                 method: "post",
-                                headers: { "Content-Type": "application/json" },
+                                headers: { "Content-Type": "application/json",
+                                    "Authorization": token,
+                                },
                                 body: JSON.stringify({
                                     mittente: loggedUser,
                                     content: message,
