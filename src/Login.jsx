@@ -7,6 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {deepOrange} from "@mui/material/colors";
 
 const defaultTheme = createTheme();
 export default function Login({func}) {

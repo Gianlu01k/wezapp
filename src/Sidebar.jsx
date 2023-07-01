@@ -81,7 +81,7 @@ const [isFilter, setIsFilter] = useState(false) //stato per selezione del filtra
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
                     <Avatar
-                        sx={{ bgcolor: deepOrange[500], marginRight: '1rem', mx: 3, my: 1 }}
+                        sx={{ bgcolor: "#004CFF", marginRight: '1rem', mx: 3, my: 1 }}
                         alt={loggedUsername} onClick={handleProfile}
                     >
                         {loggedUsername.charAt(0).toUpperCase()}

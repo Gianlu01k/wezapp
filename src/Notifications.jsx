@@ -5,6 +5,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import {Badge, Button, Fab, List, ListItem,} from "@mui/material";
 import ItemUsername from "./ItemUsername";
+import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled';
 
 const token = localStorage.getItem('token')
 export default function Notifications(){
@@ -80,7 +81,7 @@ export default function Notifications(){
             ><List>
                 {requestPending.length!==0 ?  requestPending.map((el) =>
                     <div><ListItem onClick={handleMenuClose} >
-                        <ItemUsername userid={el.user1 === loggedUser ? el.user2 : el.user1}/><Button><PersonAddAltIcon data-value={el._id} color="secondary" onClick={handleFriend}/></Button>
+                        <ItemUsername userid={el.user1 === loggedUser ? el.user2 : el.user1}/><Button><PersonAddAltIcon data-value={el._id} color="success" onClick={handleFriend}/></Button><Button><PersonAddDisabledIcon data-value={el._id} color="error" onClick={handleDeleteFriend}/></Button>
                     </ListItem>
                     </div>
                 ) : <MenuItem>Non ci sono richieste</MenuItem>}

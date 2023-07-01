@@ -223,7 +223,7 @@ export default function Home(props) {
                     </ScrollableBox>
 
 
-
+                {selectedChat &&
                 <Grid container sx={{ marginTop: 1 }}>
                         <Grid item sx={{ flexGrow: 1 }}>
                             <TextField
@@ -248,7 +248,6 @@ export default function Home(props) {
                             <Fab
                                 variant="extended"
                                 color="primary"
-                                label="Scrivi un messaggio"
                                 onClick={handleClick}
                             >
                                 <NavigationIcon sx={{ mr: 0.5 }} />

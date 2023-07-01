@@ -5,9 +5,8 @@ const friendsRouter = require('./friends')
 
 const router = express.Router()
 const middleauth = require('./middleauth')
-router.post('/login',
-    usersController.checkUser
-)
+
+router.post('/login',usersController.checkUser)
 
 //routes per la gestione delle chats e messaggi
 
