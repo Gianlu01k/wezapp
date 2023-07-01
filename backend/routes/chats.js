@@ -9,6 +9,8 @@ router.post('/login',
     usersController.checkUser
 )
 
+//routes per la gestione delle chats e messaggi
+
 router.post('/registration', usersController.addUser)
 
 router.get('/all',middleauth, usersController.retrieveAll)

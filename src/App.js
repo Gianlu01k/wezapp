@@ -57,5 +57,18 @@ export default App;
 * dell'utente destinatario.
 * Ricerca: dalla barra di ricerca è possibile ricercare uno o più utenti semplicemente digitando nella barra, la lista
 * si aggiornerà automaticamente
-* Il pulsante in basso a sinistra della sidebar permette di uscire dalla sessione e tornare alla schermata di login
+* Il pulsante in basso a sinistra della sidebar permette di uscire dalla sessione e tornare alla schermata di login.
+* Funzionalità principali:
+* Registrazione sulla piattaforma
+* Login
+* Visualizzazione messaggi scambiati con un altro utente
+* Invio messaggio a un altro utente
+* Inserimento di un amico
+* Eliminazione di un amico
+* Visualizzazione lista amici e accesso alle loro chat
+* Autenticazione sicura
+* Uso di cookie per la sessione
+* Uso Material UI
+*
+* Repository GitHub: https://github.com/Gianlu01k/wezapp.git
 * */

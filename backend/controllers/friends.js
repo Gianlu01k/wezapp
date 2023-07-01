@@ -1,6 +1,8 @@
 const Friend = require('../models/friends')
 
 module.exports ={
+
+    //controller per creare una istanza di richiesta di amicizia
     makeFriend:(req, res) =>{
         Friend.create({
             user1: req.body.user1,
@@ -11,12 +13,14 @@ module.exports ={
             .catch(()=> res.sendStatus(500))
     },
 
+    //recupera tutte le richieste di amicizia
     retrieveRequests:(req, res)=>{
         Friend.find({})
             .then(obj => res.json(obj))
             .catch(()=> res.sendStatus(500))
     },
 
+    //recupera una singola richiesta di amicizia dato l'id della richiesta
     retrieveOne:(req, res) => {
         Friend.find({_id: req.body.idfriend})
             .then(obj => res.json(obj))

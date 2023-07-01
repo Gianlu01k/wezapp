@@ -4,6 +4,8 @@ const middleauth = require('./middleauth')
 
 const router = express.Router()
 
+//routes per la gestione delle amicizie
+
 router.post('/',middleauth, friendsController.makeFriend)
 
 router.get('/pendingrequests',middleauth, friendsController.retrieveRequests)

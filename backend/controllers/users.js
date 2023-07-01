@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 module.exports = {
+
+    //controller gestione autenticazione con username e password
     checkUser:(req, res)=>{
        User.findOne({username: req.body.username})
             .then(async obj => {
@@ -23,6 +25,7 @@ module.exports = {
             .catch(err =>  console.log("errore nella ricerca sul db"))
 },
 
+    //controller per aggiunta di un utente in fase di registrazione
     addUser: (req, res) => {
         User.findOne({ username: req.body.username })
             .then(async obj => {
