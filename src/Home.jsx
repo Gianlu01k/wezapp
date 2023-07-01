@@ -15,10 +15,10 @@ const ScrollableBox = styled(Box)`
   max-height: 70vh;
 `;
 export default function Home(props) {
-    const [message, setMessage] = useState("");
-    const [listMessages, setListMessages] = useState([]);
-    const [messagePending, setMessagePending] = useState(false);
-    let [selectedChat, setSelectedChat] = useState(null);
+    const [message, setMessage] = useState(""); //stato per gestire un nuovo messaggio
+    const [listMessages, setListMessages] = useState([]); //stato per gestire tutti i messaggi della chat selezionata
+    const [messagePending, setMessagePending] = useState(false); //stato per gestire l'invio del nuovo messaggio
+    let [selectedChat, setSelectedChat] = useState(null);//stato per gestire la chat selezionata
     const scrollableBoxRef = useRef({ behavior: 'smooth', block: 'end' });
     const loggedUser = localStorage.getItem('sessionID');
     const token = localStorage.getItem('token')
@@ -70,6 +70,7 @@ export default function Home(props) {
     function handleClick(e) {
         e.preventDefault();
         let selectedChat = [];
+
         fetch("http://localhost:3000/chat", {
             method: "post",
             headers: { "Content-Type": "application/json","Authorization": token, },
@@ -86,6 +87,7 @@ export default function Home(props) {
             .then(() => {
                 if (selectedChat.length !== 0) {
                     if (message !== "") {
+                        // richiesta post per ottenere il messaggio nuovo
                         fetch("http://localhost:3000/chat/newmessage", {
                             method: "post",
                             headers: {
@@ -98,6 +100,7 @@ export default function Home(props) {
                                 chat: selectedChat[0]._id,
                             }),
                         }).then(() => setMessage(""));
+                        // ottengo il nuovo messaggio
                         setMessagePending(!messagePending);
                     }
                 }else{

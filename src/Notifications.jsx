@@ -41,6 +41,7 @@ export default function Notifications(){
 
         if(e.target.dataset.value !== undefined){
             fetch('http://localhost:3000/friends/accept', {
+                //richiesta post per accettare una richiesta di amicizia
                 method: 'post',
                 headers: {'Content-Type': 'application/json',
                     "Authorization": token,

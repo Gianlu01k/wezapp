@@ -6,8 +6,7 @@ const token = localStorage.getItem('token')
 
 export default function ItemUsername(props){
 
-    const [username, setUsername] =useState("")
-
+    const [username, setUsername] =useState("") //stato per gestire l'username
     useEffect(()=> {
         fetch('http://localhost:3000/one', {
             method: 'post',
