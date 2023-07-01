@@ -28,7 +28,8 @@ const [isFilter, setIsFilter] = useState(false) //stato per selezione del filtra
     function handleFilter() {
         fetch('http://localhost:3000/friends/pendingrequests', {
             method: 'get',
-            headers: {'Content-Type': 'application/json',"Authorization": token,},
+            headers: {'Content-Type': 'application/json',
+                "Authorization": token},
         })
             .then(data => data.json())
             .then(requests => {
@@ -85,13 +86,6 @@ const [isFilter, setIsFilter] = useState(false) //stato per selezione del filtra
                         alt={loggedUsername} onClick={handleProfile}
                     >
                         {loggedUsername.charAt(0).toUpperCase()}
-                        <Dialog open={isOpen} onClose={handleProfile}>
-                            <DialogTitle>{loggedUsername}</DialogTitle>
-                            <Avatar
-                                sx={{ bgcolor: deepOrange[500], marginRight: '1rem', mx: 3, my: 1 }}
-                                alt={loggedUsername}> {loggedUsername.charAt(0).toUpperCase()} </Avatar>
-
-                        </Dialog>
                     </Avatar>
                     <TextField
                         label="Cerca"

@@ -254,7 +254,7 @@ export default function Home(props) {
                                 Invia
                             </Fab>
                         </Grid>
-                    </Grid>
+                    </Grid>}
 
             </Container>
         </>

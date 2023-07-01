@@ -28,7 +28,7 @@ export default function Usercard(props) {
         fetch('http://localhost:3000/friends/pendingrequests', {
             method: 'get',
             headers: {'Content-Type': 'application/json',
-                "Authorization": token,
+                "Authorization": token
             },
         }).then(data => data.json())
             .then(requests => {
@@ -47,7 +47,13 @@ export default function Usercard(props) {
 
     function handleFriend(e){
         //richiesta per invio della richiesta di amicizia
-        fetch('http://localhost:3000/friends/pendingrequests')
+        fetch('http://localhost:3000/friends/pendingrequests',{
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": token
+            }
+        })
             .then(requests => requests.json())
             .then(data => data.filter(friend => friend.user1 === loggedUser || friend.user2 === loggedUser))
             .then(myfriends => myfriends.filter(friend => friend.user1 === props.user._id || friend.user2 === props.user._id))
@@ -55,7 +61,7 @@ export default function Usercard(props) {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
-                    "Authorization": token,
+                    "Authorization": token
                 },
                 body: JSON.stringify({
                         user1: loggedUser,
@@ -70,7 +76,14 @@ export default function Usercard(props) {
         //gestione rimozione amicizia
         const areSure = window.confirm("Sei sicuro di rimuovere questa amicizia? \n Non potrai più interagire con lui/lei")
         if(areSure) {
-            fetch('http://localhost:3000/friends/pendingrequests')
+            fetch('http://localhost:3000/friends/pendingrequests',{
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": token
+                    }
+                }
+                )
                 .then(requests => requests.json())
                 .then(data => data.filter(friend => friend.user1 === loggedUser || friend.user2 === loggedUser))
                 .then(myfriends => myfriends.filter(friend => friend.user1 === props.user._id || friend.user2 === props.user._id))
@@ -81,7 +94,7 @@ export default function Usercard(props) {
                             idfriend: exfriend[0]._id
                         }
                     )
-                }).then(obj => obj.json()).then(data => setIsFriend(0)) : alert("Errore rimozione"))
+                }).then(obj => obj.json()).then(data => setIsFriend(0)) : alert("Errore rimozione")).then(()=> window.location.reload())
         }
     }
 

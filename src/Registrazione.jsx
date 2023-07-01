@@ -55,7 +55,7 @@ export default function Registrazione(){
 
         <>
             <ThemeProvider theme={defaultTheme}>
-                <Container component="main" maxWidth="xs">
+                <Container component="main" maxWidth="xs" >
                     <CssBaseline />
                     <Box
                         sx={{
@@ -63,6 +63,7 @@ export default function Registrazione(){
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            my:15
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: deepOrange[500] }}>

@@ -18,7 +18,8 @@ export default function Homepage({loggedUser}){
         //richiesta get di tutti gli utenti esistenti, registrati nella piattaforma
         fetch('http://localhost:3000/all',{
             headers: {
-                "Authorization": token,
+                "Content-type": "application/json",
+                "Authorization": token
             },
         })
             .then(obj => obj.json())

@@ -18,6 +18,7 @@ module.exports = {
                 const secretKey = 'wezappsk2023';
                 const expiresIn = '2h';
                 const token = jwt.sign(payload, secretKey, { expiresIn });
+                console.log(token)
                     res.send({user: obj, verified: true, token: token})}
                 else
                     res.send({verified: false})

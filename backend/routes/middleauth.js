@@ -6,7 +6,6 @@ const decodeTokenMiddleware = (req, res, next) => {
     //gestione token di sessione
     
     const token = req.headers.authorization;
-
     if (token) {
         const secretKey = 'wezappsk2023';
         jwt.verify(token,  secretKey, (err, decoded) => {

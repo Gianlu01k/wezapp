@@ -7,7 +7,6 @@ import {Badge, Button, Fab, List, ListItem,} from "@mui/material";
 import ItemUsername from "./ItemUsername";
 import PersonAddDisabledIcon from '@mui/icons-material/PersonAddDisabled';
 
-const token = localStorage.getItem('token')
 export default function Notifications(){
 
     const [anchorEl, setAnchorEl] = useState(null); // stato per gestire il menu delle notifiche
@@ -60,6 +59,25 @@ export default function Notifications(){
 
     }
 
+    const handleDeleteFriend=(e)=>{
+
+        if(e.target.dataset.value !== undefined){
+            fetch('http://localhost:3000/friends/delete', {
+                //richiesta post per rifiutare una richiesta di amicizia
+                method: 'post',
+                headers: {'Content-Type': 'application/json',
+                    "Authorization": token,
+                },
+                body: JSON.stringify({
+                        idfriend: e.target.dataset.value,
+                    }
+                )
+            }).then(obj => obj.json()).then(
+                data=> setRequestPending(requestPending)).then(()=> window.location.reload())
+        }
+
+    }
+
 
     return(
         <div >
@@ -77,7 +95,7 @@ export default function Notifications(){
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
-                sx={{mx: -4}}
+                sx={{mx: -3}}
             ><List>
                 {requestPending.length!==0 ?  requestPending.map((el) =>
                     <div><ListItem onClick={handleMenuClose} >
