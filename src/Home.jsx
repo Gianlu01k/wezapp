@@ -7,6 +7,7 @@ import {deepOrange} from "@mui/material/colors";
 import Cookies from "js-cookie";
 import Notifications from "./Notifications";
 import {Dialog, DialogTitle, DialogContent } from "@mui/material";
+import logo from "./logo-white.png";
 
 const token = Cookies.get('token')
 
@@ -220,11 +221,13 @@ export default function Home(props) {
                                 />
                             ))}
                         </List>) : ""}
-                    </ScrollableBox>
 
+
+                    </ScrollableBox>
+                <Box sx={{my:'-40%',mx:'45%'}}> <img src={logo} width={"150px"} /></Box>
 
                 {selectedChat &&
-                <Grid container sx={{ marginTop: 1 }}>
+                <Grid container sx={{ marginTop: 1 ,my:'68%'}}>
                         <Grid item sx={{ flexGrow: 1 }}>
                             <TextField
                                 fullWidth
