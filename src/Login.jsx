@@ -8,6 +8,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {deepOrange} from "@mui/material/colors";
+import logo from "./logo.png"
 
 const defaultTheme = createTheme();
 export default function Login({func}) {
@@ -114,9 +115,12 @@ export default function Login({func}) {
                     }}><p>Non hai un account? <Link variant="body2" to={"/registrazione"}>Registrati ora</Link></p></Box>
 
             </Box>
-
+                       <Box sx={{my:10}}> <img src={logo} width={"150px"} /></Box>
                     </Box>
+
+
         </Container>
+
         </ThemeProvider>
         </Box>
         </Container>: navigate('/homepage'))

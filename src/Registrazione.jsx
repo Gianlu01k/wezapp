@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {deepOrange} from "@mui/material/colors";
+import logo from "./logo.png";
 
 
 const defaultTheme = createTheme();
@@ -145,6 +146,7 @@ export default function Registrazione(){
                                 </Grid>
                             </Grid>
                         </Box>
+                        <Box sx={{my:10}}> <img src={logo} width={"150px"} /></Box>
                     </Box>
                 </Container>
             </ThemeProvider>

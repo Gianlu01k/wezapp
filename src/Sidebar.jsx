@@ -11,6 +11,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterListOffIcon from '@mui/icons-material/FilterListOff';
 import { Tooltip } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
+import logo from "./logo.png";
 
 
 export default function Sidebar(props){
@@ -77,7 +78,8 @@ const [isFilter, setIsFilter] = useState(false) //stato per selezione del filtra
         <>
             <Container sx={{ marginLeft: '3rem', width: '90%', }}>
                 <Box sx={{ mx: 3, display: 'flex', alignItems: 'center', }}>
-                    <h1 sx={{ flexGrow: 1 }}>Wezapp</h1>
+                       <Avatar src={logo}   /><h1 sx={{ flexGrow: 1 }}>Wezapp</h1>
+
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
