@@ -15,8 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 export default function Registrazione(){
 
-    const [form, setForm] = useState({username:"", password:"", firstname:"", lastname:""})
-    const [error,setError]=useState(false)
+    const [form, setForm] = useState({username:"", password:"", firstname:"", lastname:""}) //stato gestione form
+    const [error,setError]=useState(false) //stato gestione errori
     const navigate = useNavigate();
 
     function handleChange(e){
@@ -25,12 +25,12 @@ export default function Registrazione(){
 
     function handleClick(e){
         e.preventDefault()
-
+        //gestione form di registrazione
         if(form.username==="" || form.password==="" || form.firstname===""|| form.lastname==="")
             setError(true)
         else{
             setError(false)
-
+            //richiesta post per memorizzare su db l'utente registrato
             fetch('http://localhost:3000/registration',
                 {
                     method: 'post',

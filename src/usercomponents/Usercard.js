@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Avatar, Button, ListItem, ListItemText} from "@mui/material";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import Cookies from "js-cookie";
 import IconButton from '@mui/material/IconButton';
 import GroupIcon from '@mui/icons-material/Group';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
@@ -11,18 +10,19 @@ export default function Usercard(props) {
 
     const loggedUser = localStorage.getItem('sessionID');
     const token = localStorage.getItem('token')
-    const [isFriend, setIsFriend] = useState(0)
+    const [isFriend, setIsFriend] = useState(0) //stato per gestire amicizia
 
     function handleClick(e) {
-       if(isFriend===2) {
+       if(isFriend===2) { //richiesta accettata
             props.setDest(props.user)
         }else{
-           if(isFriend ===0)
+           if(isFriend ===0) //richiesta non inviata
            alert("Non siete ancora amici. Invia una richiesta prima di chattare")
            else
-               alert("Richiesta già inviata, ma non ancora accettata")
+               alert("Richiesta già inviata, ma non ancora accettata") //richiesta inviata ma non accettata
        }
     }
+
 
     useEffect(()=> {
         fetch('http://localhost:3000/friends/pendingrequests', {
@@ -37,7 +37,7 @@ export default function Usercard(props) {
                     if ((el.user1 === props.id && el.user2 === loggedUser) || (el.user2 === props.id && el.user1 === loggedUser)) {
 
                         if (el.req2 === true) {
-                            setIsFriend(2)
+                            setIsFriend(2) //accettazione amicizia
 
                         }
                     }
@@ -46,6 +46,7 @@ export default function Usercard(props) {
     } ,isFriend)
 
     function handleFriend(e){
+        //richiesta per invio della richiesta di amicizia
         fetch('http://localhost:3000/friends/pendingrequests')
             .then(requests => requests.json())
             .then(data => data.filter(friend => friend.user1 === loggedUser || friend.user2 === loggedUser))
@@ -66,13 +67,14 @@ export default function Usercard(props) {
     }
 
     function deleteFriend(e){
+        //gestione rimozione amicizia
         const areSure = window.confirm("Sei sicuro di rimuovere questa amicizia? \n Non potrai più interagire con lui/lei")
         if(areSure) {
             fetch('http://localhost:3000/friends/pendingrequests')
                 .then(requests => requests.json())
                 .then(data => data.filter(friend => friend.user1 === loggedUser || friend.user2 === loggedUser))
                 .then(myfriends => myfriends.filter(friend => friend.user1 === props.user._id || friend.user2 === props.user._id))
-                .then(exfriend => exfriend.length === 1 ? fetch('http://localhost:3000/friends/delete', {
+                .then(exfriend => exfriend.length === 1 ? fetch('http://localhost:3000/friends/delete', { //rimozione amicizia
                     method: 'post',
                     headers: {'Content-Type': 'application/json',"Authorization": token,},
                     body: JSON.stringify({

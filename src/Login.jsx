@@ -10,16 +10,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 export default function Login({func}) {
-    const [testo, setTesto] = useState({username: "", password: ""})
-    const [user, setUser] = useState({_id:"", fistname:"", lastname:"", username:"", password:""});
-    const [error, setError] = useState(false)
+    const [testo, setTesto] = useState({username: "", password: ""}) //stato per caratteri inseriti nel form
+    const [user, setUser] = useState({_id:"", fistname:"", lastname:"", username:"", password:""}); //stato per memorizzare l'utente loggato
+    const [error, setError] = useState(false) //stato per gestire l'errore
     const navigate = useNavigate();
     function handleChange(e) {
-        setTesto({...testo, [e.target.name]: e.target.value})
+        setTesto({...testo, [e.target.name]: e.target.value}) //aggiorna campi dello stato testo
     }
 
     function handleSubmit(e) {
         e.preventDefault()
+        //richiesta post contentente username e password inseriti
         fetch('http://localhost:3000/login',
             {
                 method: 'post',
@@ -36,6 +37,7 @@ export default function Login({func}) {
                 if (u.verified) {
                     setUser(u.user);
                     func(u.user);
+                    //imposto local storage per memorizzare id utente, username utente e jwt token di sessione
                     localStorage.setItem('sessionID', u.user._id);
                     localStorage.setItem('sessionUsername', u.user.username);
                     localStorage.setItem('token', u.token);

@@ -1,21 +1,21 @@
 import React, {useEffect, useState} from "react";
 import Home from "./Home";
 import Sidebar from "./Sidebar";
-import './sidehome.css'
-import {Box, CssBaseline, Grid} from "@mui/material";
-import Cookies from 'js-cookie';
+import {Grid} from "@mui/material";
 
 const sessionID = localStorage.getItem('sessionID');
 const token = localStorage.getItem('token')
 
 export default function Homepage({loggedUser}){
 
-    const [users, setUsers] = useState([])
+    const [users, setUsers] = useState([]) //stato per gestire gli utenti esistenti
     const [receiver, setReceiver] = useState({_id:"", firstname:"", lastname:"", username:"", password:""})
+    //stato per gestire l'utente selezionato
 
 
 
     useEffect(()=>{
+        //richiesta get di tutti gli utenti esistenti, registrati nella piattaforma
         fetch('http://localhost:3000/all',{
             headers: {
                 "Authorization": token,

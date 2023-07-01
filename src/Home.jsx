@@ -6,7 +6,7 @@ import { styled } from "@mui/system";
 import {deepOrange} from "@mui/material/colors";
 import Cookies from "js-cookie";
 import Notifications from "./Notifications";
-import {Dialog, DialogTitle, DialogContent, DialogActions, Button } from "@mui/material";
+import {Dialog, DialogTitle, DialogContent } from "@mui/material";
 
 const token = Cookies.get('token')
 
@@ -26,12 +26,14 @@ export default function Home(props) {
         setMessage(e.target.value);
     }
     useEffect(() => {
+        //uso una useEffect in modo tale da aggiornare il componente ad ogni arrivo di un nuovo messaggio
         if (scrollableBoxRef.current) {
             scrollableBoxRef.current.scrollTop = scrollableBoxRef.current.scrollHeight;
         }
     }, [listMessages]);
 
     useEffect(() => {
+        //richiesta per ottenere le chat dal database
         fetch("http://localhost:3000/chat", {
             method: "post",
             headers: { "Content-Type": "application/json",
@@ -41,6 +43,7 @@ export default function Home(props) {
         })
             .then((data) => data.json())
             .then((chat) => {
+                //selezione della chat tra utente loggato e utente destinatario selezionato
                 selectedChat = chat.filter(
                     (el) =>
                         (el.users[0] === loggedUser && el.users[1] === props.rec) ||
@@ -49,6 +52,7 @@ export default function Home(props) {
 
                 setListMessages([]);
                 if (selectedChat.length !== 0) {
+                    //richiesta per ottenere tutti i messaggi
                     fetch(`http://localhost:3000/chat/messages`,{
                         headers: {
                             "Authorization": token,
@@ -56,16 +60,17 @@ export default function Home(props) {
                     })
                         .then((data) => data.json())
                         .then((messages) => {
+                            //ottengo tutti i messaggi relativi alla chat selezionata
                             const mess = messages.filter(
                                 (msg) => msg.chat === selectedChat[0]._id
                             );
-                            setSelectedChat(mess)
+                            setSelectedChat(mess); //aggiorno gli stati
                             setListMessages(mess);
                         });
                 }
 
             });
-    }, [props.rec, loggedUser, messagePending]);
+    }, [props.rec, loggedUser, messagePending]); //rieseguo le fetch ad ogni aggiornamento dei parametri
 
     function handleClick(e) {
         e.preventDefault();
@@ -104,6 +109,8 @@ export default function Home(props) {
                         setMessagePending(!messagePending);
                     }
                 }else{
+                    //gestisco il caso in cui la chat tra user e destinatario non è stata iniziata
+                    //richiesta post per la creazione della chat
                     fetch("http://localhost:3000/chat/newchat",{
                         method: "post",
                         headers: { "Content-Type": "application/json",
@@ -115,6 +122,7 @@ export default function Home(props) {
                     }).then(obj => obj.json()).then(
                         chat => {
                             const idnewchat = chat._id;
+                            //aggiunta del nuovo messaggio alla chat appena creata
                             fetch("http://localhost:3000/chat/newmessage", {
                                 method: "post",
                                 headers: { "Content-Type": "application/json",
@@ -134,9 +142,7 @@ export default function Home(props) {
             });
     }
 
-    function handleAdvice(){
-
-    }
+    //gestion del dialog
 
         const [open, setOpen] = useState(false);
 

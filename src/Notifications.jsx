@@ -3,15 +3,14 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import {Badge, Button, Fab, List, ListItem, ListItemText, MenuList} from "@mui/material";
-import Cookies from "js-cookie";
+import {Badge, Button, Fab, List, ListItem,} from "@mui/material";
 import ItemUsername from "./ItemUsername";
 
 const token = localStorage.getItem('token')
 export default function Notifications(){
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [requestPending, setRequestPending] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null); // stato per gestire il menu delle notifiche
+    const [requestPending, setRequestPending] = useState([]) //stato per gestire le richieste di amicizia in arrivo
     let userpending = "";
     const loggedUser = localStorage.getItem('sessionID');
     const token = localStorage.getItem('token')
@@ -19,16 +18,20 @@ export default function Notifications(){
 
 
     useEffect(() => {
+        //richiesta per otttentere tutte le richiesta ricevute
         fetch('http://localhost:3000/friends/pendingrequests',{
             headers: {
                 "Authorization": token,
             },
         })
             .then(requests => requests.json())
+            //seleziono le richieste non ancora accettate inviate all'utente loggato
             .then(data => setRequestPending(data.filter(friend => {
                 return (friend.user2 === loggedUser) && (friend.req2 === false);
             })))
     },requestPending)
+
+    //gestione del menù delle richieste di amicizia
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -48,7 +51,6 @@ export default function Notifications(){
                 },
                 body: JSON.stringify({
                         idfriend: e.target.dataset.value,
-
                     }
                 )
             }).then(obj => obj.json()).then(

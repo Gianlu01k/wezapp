@@ -15,12 +15,12 @@ import Dialog from '@mui/material/Dialog';
 
 export default function Sidebar(props){
 
-const [searchUt,setSearchUt]=useState("")
-const loggedUsername = localStorage.getItem('sessionUsername')
+const [searchUt,setSearchUt]=useState("") //stato per la ricerca utente
+const loggedUsername = localStorage.getItem('sessionUsername') //username utente loggato
 const loggedUser = localStorage.getItem('sessionID')
 const token = localStorage.getItem('token')
-const [isFilter, setIsFilter] = useState(false)
-    const [filteredFriends, setFilteredFriends] = useState([]);
+const [isFilter, setIsFilter] = useState(false) //stato per selezione del filtraggio
+    const [filteredFriends, setFilteredFriends] = useState([]); //stato per gestione amici
     const handleSearch=(e) => {
     setSearchUt(e.target.value)
     }
@@ -49,6 +49,7 @@ const [isFilter, setIsFilter] = useState(false)
             });
     }
 
+    //gestione filtro amici
     let filteredUsers;
     if (isFilter) {
         filteredUsers = filteredFriends.filter(el =>
