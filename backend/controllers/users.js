@@ -60,6 +60,7 @@ module.exports = {
             });
     },
 
+    //controller per recuperare tutti gli utenti
     retrieveAll: (req, res) => {
         User.find({})
             .then(obj => res.json(obj))
@@ -67,6 +68,7 @@ module.exports = {
         res.sendStatus(500);} )
     },
 
+    //controller per recuperare un utente
     retrieveOne:(req, res) => {
         User.findOne({_id: req.body.id})
             .then(obj => res.json(obj))

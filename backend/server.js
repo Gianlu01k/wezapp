@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(express.static("static"))
 
 app.use('/', router)
-
+//gestione per il decode del token
 const decodeTokenMiddleware = require("./routes/middleauth");
 app.get('http://localhost:3001/homepage', decodeTokenMiddleware, (req, res) => {
     res.status(200);

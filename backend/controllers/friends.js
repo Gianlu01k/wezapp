@@ -23,11 +23,13 @@ module.exports ={
             .catch(()=> res.sendStatus(500))
     },
 
+    //controller per accettare la richiesta dell'amico
     acceptRequest:(req, res)=>{
         Friend.updateOne({_id: req.body.idfriend}, {$set: { req2: true } })
             .then(obj => res.json(obj))
     },
 
+    //controller per cancellare l'amicizia
     deleteOne:(req, res)=>{
         Friend.deleteOne({_id: req.body.idfriend})
             .then(obj => res.json(obj))}
