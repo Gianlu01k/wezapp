@@ -43,7 +43,7 @@ export default function Usercard(props) {
                     }
                 })
             })
-    } ,isFriend)
+    } ,[isFriend])
 
     function handleFriend(e){
         //richiesta per invio della richiesta di amicizia

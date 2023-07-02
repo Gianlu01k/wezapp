@@ -21,6 +21,7 @@ export default function Home(props) {
     const [messagePending, setMessagePending] = useState(false); //stato per gestire l'invio del nuovo messaggio
     let [selectedChat, setSelectedChat] = useState(null);//stato per gestire la chat selezionata
     const scrollableBoxRef = useRef({ behavior: 'smooth', block: 'end' });
+
     const loggedUser = localStorage.getItem('sessionID');
     const token = localStorage.getItem('token')
     function handleChange(e) {

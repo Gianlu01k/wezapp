@@ -3,10 +3,12 @@ import Home from "./Home";
 import Sidebar from "./Sidebar";
 import {Grid} from "@mui/material";
 
-const sessionID = localStorage.getItem('sessionID');
-const token = localStorage.getItem('token')
+
 
 export default function Homepage({loggedUser}){
+
+    const sessionID = localStorage.getItem('sessionID');
+    const token = localStorage.getItem('token')
 
     const [users, setUsers] = useState([]) //stato per gestire gli utenti esistenti
     const [receiver, setReceiver] = useState({_id:"", firstname:"", lastname:"", username:"", password:""})
