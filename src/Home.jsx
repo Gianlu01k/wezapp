@@ -211,7 +211,19 @@ export default function Home(props) {
                         borderTopRightRadius: 0,
                         borderBottomLeftRadius: 25,
                         borderBottomRightRadius: 25,}}>
+                        <img
+                            src={logo}
+                            alt="Floating Image"
+                            style={{
+                                position: 'absolute',
+                                top: '35%',
+                                left: '58%',
+                                width:'130px'
+                            }}
+                        />
                         {selectedChat ? (
+
+
                         <List>
                             {listMessages.map((m) => (
                                 <Message
@@ -221,14 +233,14 @@ export default function Home(props) {
                                     loggedUser={loggedUser}
                                 />
                             ))}
-                        </List>) : ""}
+                        </List> ) : ""}
 
 
                     </ScrollableBox>
-                <Box sx={{my:'-40%',mx:'45%'}}> <img src={logo} width={"150px"} /></Box>
+
 
                 {selectedChat &&
-                <Grid container sx={{ marginTop: 1 ,my:'68%'}}>
+                <Grid container sx={{ marginTop: 1}}>
                         <Grid item sx={{ flexGrow: 1 }}>
                             <TextField
                                 fullWidth
